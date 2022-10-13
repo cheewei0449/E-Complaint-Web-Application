@@ -15,9 +15,6 @@
              .black{
                 color:black;
              }
-             .b {
-  font-style: italic;
-}
             </style>
             
 </head>
