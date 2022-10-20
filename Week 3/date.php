@@ -42,7 +42,8 @@
                     echo "<option value=\"$num\">$num</option>";
                 }
                 ?>
-            </select>
+
+
             </div>
  
     <?php
