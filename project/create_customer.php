@@ -116,19 +116,19 @@
     <table class='table table-hover table-responsive table-bordered'>
         <tr>
             <td>Username</td>
-            <td><input type='text' username='username' class='form-control' /></td>
+            <td><input type='text' name='username' class='form-control' /></td>
         </tr>
         <tr>
             <td>Password</td>
-            <td><input type='text' username='password' class='form-control' /></td>
+            <td><input type='text' name='password' class='form-control' /></td>
         </tr>
         <tr>
             <td>First Name</td>
-            <td><input type='text' username='first_name' class='form-control' /></td>
+            <td><input type='text' name='first_name' class='form-control' /></td>
         </tr>
         <tr>
             <td>Last Name</td>
-            <td><input type='text' username='last_name' class='form-control' /></td>
+            <td><input type='text' name='last_name' class='form-control' /></td>
         </tr>
         <tr>
              <td>Gender</td>
@@ -154,7 +154,7 @@
         </tr>
         <tr>
             <td>date_of_birth</td>
-            <td><input type='date' username='date_of_birth' class='form-control' /></td>
+            <td><input type='date' name='date_of_birth' class='form-control' /></td>
         </tr>
         <tr>
         <td>Account status</td>
