@@ -63,10 +63,10 @@
                 $account_status = $_POST['account_status'];
 
                 if ($username == "" || $password == "" || $first_name == "" || $last_name == "" || $gender == "" || $date_of_birth == "") {
-                    echo "<div class='alert alert-danger'>Please make sure all fields are not empty</div>";
+                    echo "<div class='alert alert-danger'>Pls don't have empty.</div>";
                 } else {
                     if ($date_of_birth > date('Y-m-d')) {
-                        echo "<div class='alert alert-danger'>Date of Birth cannot in future.</div>";
+                        echo "<div class='alert alert-danger'>Date of Birth can't in future.</div>";
                     } else {
                         // include database connection
                         include 'config/database.php';
