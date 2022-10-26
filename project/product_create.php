@@ -3,9 +3,48 @@
 <head>
     <title>PDO - Create a Record - PHP CRUD Tutorial</title>
     <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" href="css/styles.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/e0e2f315c7.js" crossorigin="anonymous"></script>
 </head>
 <body>  
+<header>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+
+                <a class="navbar-brand " href="#">
+                    <i class="fa-solid fa-shop fa-xl text-light me-2 "></i>
+                    eshop
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse d-md-flex justify-content-end" id="navbarCollapse">
+                    <ul class="navbar-nav mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="index.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="product_create.php">Create Product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="create_customer.php">Create Customer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Exercise.php">Contact Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
     <!-- container -->
     <div class="container">
         <div class="page-header">
@@ -32,7 +71,12 @@ if($_POST){
 
         if($name ==""||$description ==""||$price == ""||$promotion_price ==""||$manufacture_date ==""||$expired_date ==""){
             echo "<div class='alert alert-danger'>Pls don't have empty.</div>";
-        }else{
+        } else {
+            if ($promotion_price > $price) {
+                echo "<div class='alert alert-danger'>promotion price should be cheaper than original price</div>";
+            } else if ($expired_date < $manufacture_date) {
+                echo "<div class='alert alert-danger'>expired date should be later than manufacture date</div>";
+            } else {
     include 'config/database.php';
     try{
         // insert query
@@ -56,7 +100,6 @@ if($_POST){
         }else{
             echo "<div class='alert alert-danger'>Unable to save record.</div>";
         }
-  
     }
     // show error
     catch(PDOException $exception){
@@ -64,6 +107,7 @@ if($_POST){
     }
 }
     }
+}
 }
 ?>
 
@@ -108,7 +152,18 @@ if($_POST){
 </form>
     </div> 
     <!-- end .container -->  
+    <hr class="featurette-divider">
+
+<!-- FOOTER -->
+<footer class="container">
+    <p class="float-end"><a class="text-decoration-none fw-bold" href="#">Back to top</a></p>
+    <p class="text-muted fw-bold">&copy; Ch'ng Chee Wei 2022 &middot;
+        <a class="text-decoration-none fw-bold" href="#">Privacy</a> &middot;
+        <a class="text-decoration-none fw-bold" href="#">Terms</a>
+    </p>
+</footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
 </body>
 </html>
 
