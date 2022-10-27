@@ -135,11 +135,11 @@
                     </tr>
                     <tr>
                         <td>Price</td>
-                        <td><input type='text' name='price' class='form-control' /></td>
+                        <td><input type='number' name='price' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Promotion_price</td>
-                        <td><input type='text' name='promotion_price' class='form-control' /></td>
+                        <td><input type='number' name='promotion_price' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Manufacture_date</td>
