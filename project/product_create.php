@@ -74,6 +74,12 @@
                     if ($name == "" || $description == "" || $price == "" || $promotion_price == "" || $manufacture_date == "" || $expired_date == "") {
                         echo "<div class='alert alert-danger'>Pls don't have empty.</div>";
                     } else {
+                        if ($price > 1000){
+                            echo "<div class='alert alert-danger'>the price can't more than 1000</div>";
+                        }
+                        if ($price < 1){
+                            echo "<div class='alert alert-danger'>can't negative</div>";
+                        }
                         if ($promotion_price > $price) {
                             echo "<div class='alert alert-danger'>promotion price should be cheaper than original price</div>";
                         } else if ($expired_date < $manufacture_date) {
