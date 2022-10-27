@@ -16,7 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
         integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
         crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/e0e2f315c7.js" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/3ddd77b8ec.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -26,7 +26,7 @@
       <div class="container-fluid">
 
                 <a class="navbar-brand " href="#">
-                    <i class="fa-solid fa-shop fa-xl text-light me-2 "></i>
+                <i class="fa-brands fa-shopify fa-xl text-light me-2 "></i>
                     eshop
                 </a>
 

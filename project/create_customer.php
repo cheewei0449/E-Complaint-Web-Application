@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/e0e2f315c7.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/3ddd77b8ec.js" crossorigin="anonymous"></script>
 </head>
 <body>  
 <header>
@@ -17,7 +17,7 @@
       <div class="container-fluid">
 
                 <a class="navbar-brand " href="#">
-                    <i class="fa-solid fa-shop fa-xl text-light me-2 "></i>
+                <i class="fa-brands fa-shopify fa-xl text-light me-2 "></i>
                     eshop
                 </a>
 
