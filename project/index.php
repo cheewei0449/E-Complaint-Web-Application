@@ -118,7 +118,7 @@
   </div>
     <footer class="margin border-top py-3 d-flex flex-column flex-sm-row text-start text-sm-center justify-content-between align-items-start align-items-sm-cente">
       <div>
-        <p class="m-0">Copyright @2019 Tutorial Republic</p>
+        <p class="m-0">Ch'ng Chee Wei 2022</p>
         </div>
         <div class = "d-flex pt-2 pt-sm-0">
           <a href="#" class="border-end pe-2 px-sm-2 text-decpration-none text-dark">Term of Us</a>
