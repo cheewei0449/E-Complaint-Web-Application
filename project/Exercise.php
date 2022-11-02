@@ -39,10 +39,16 @@
                             <a class="nav-link" href="product_create.php">Create Product</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="create_customer.php">Create Customer</a>
+                            <a class="nav-link Activation" href="create_customer.php">Create Customer</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="Exercise.php">Contact Us</a>
+                            <a class="nav-link active" href="customer_read.php">Customer riew</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="product_read.php">Product riew</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Exercise.php">Contact Us</a>
                         </li>
                     </ul>
                 </div>

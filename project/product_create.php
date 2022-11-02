@@ -32,10 +32,16 @@
                             <a class="nav-link" aria-current="page" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="product_create.php">Create Product</a>
+                            <a class="nav-link" href="product_create.php">Create Product</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="create_customer.php">Create Customer</a>
+                            <a class="nav-link Activation" href="create_customer.php">Create Customer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="customer_read.php">Customer riew</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="product_read.php">Product riew</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="Exercise.php">Contact Us</a>
@@ -74,10 +80,10 @@
                     if ($name == "" || $description == "" || $price == "" || $promotion_price == "" || $manufacture_date == "" || $expired_date == "") {
                         echo "<div class='alert alert-danger'>Pls don't have empty.</div>";
                     } else {
-                        if ($price > 1000){
+                        if ($price > 1000) {
                             echo "<div class='alert alert-danger'>the price can't more than 1000</div>";
                         }
-                        if ($price < 1){
+                        if ($price < 1) {
                             echo "<div class='alert alert-danger'>can't negative</div>";
                         }
                         if ($promotion_price > $price) {

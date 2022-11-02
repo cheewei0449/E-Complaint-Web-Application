@@ -7,11 +7,50 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/3ddd77b8ec.js" crossorigin="anonymous"></script>
     <!-- Latest compiled and minified Bootstrap CSS -->
 
 </head>
 
 <body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+
+                <a class="navbar-brand " href="#">
+                    <i class="fa-brands fa-shopify fa-xl text-light me-2 "></i>
+                    eshop
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse d-md-flex justify-content-end" id="navbarCollapse">
+                    <ul class="navbar-nav mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="index.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="product_create.php">Create Product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link Activation" href="create_customer.php">Create Customer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="customer_read.php">Customer riew</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="product_read.php">Product riew</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Exercise.php">Contact Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
     <!-- container -->
     <div class="container">
         <div class="page-header">
@@ -34,7 +73,7 @@
         $num = $stmt->rowCount();
 
         // link to create record form
-        echo "<a href='create.php' class='btn btn-primary m-b-1em'>Create New Product</a>";
+        echo "<a href='product_create.php' class='btn btn-primary m-b-1em'>Create New Product</a>";
 
         //check if more than 0 record found
         if ($num > 0) {
@@ -87,7 +126,13 @@
     </div> <!-- end .container -->
 
     <!-- confirm delete record will be here -->
-    BOOTSTRAP5 JS
 </body>
+<footer class="container">
+    <p class="float-end"><a class="text-decoration-none fw-bold" href="#">Back to top</a></p>
+    <p class="text-muted fw-bold">&copy; Ch'ng Chee Wei 2022 &middot;
+        <a class="text-decoration-none fw-bold" href="#">Privacy</a> &middot;
+        <a class="text-decoration-none fw-bold" href="#">Terms</a>
+    </p>
+</footer>
 
 </html>

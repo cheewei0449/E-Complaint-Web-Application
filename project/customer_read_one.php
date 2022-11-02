@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
-    <!-- Latest compiled and minified Bootstrap CSS →
+    <script src="https://kit.fontawesome.com/3ddd77b8ec.js" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified Bootstrap CSS -->
 
 </head>
+
 <body>
- 
+
     <!-- container -->
     <div class="container">
         <div class="page-header">
@@ -98,6 +100,13 @@
 
     </div> <!-- end .container -->
 
-    </body>
+</body>
+<footer class="container">
+    <p class="float-end"><a class="text-decoration-none fw-bold" href="#">Back to top</a></p>
+    <p class="text-muted fw-bold">&copy; Ch'ng Chee Wei 2022 &middot;
+        <a class="text-decoration-none fw-bold" href="#">Privacy</a> &middot;
+        <a class="text-decoration-none fw-bold" href="#">Terms</a>
+    </p>
+</footer>
 
 </html>
