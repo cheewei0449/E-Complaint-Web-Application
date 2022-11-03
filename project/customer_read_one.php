@@ -24,7 +24,7 @@
         <?php
         // get passed parameter value, in this case, the record ID
         // isset() is a PHP function used to verify if a value is there or not
-        $id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
+        $CustomerID = isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
 
         //include database connection
         include 'config/database.php';
@@ -32,27 +32,34 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT id, username, first_name, last_name, gender, date_of_birth, account_status FROM customers WHERE id = :id ";
+            $query = "SELECT CustomerID, username, password, first_name, last_name, gender, date_of_birth, registration_date_time, account_status FROM customers WHERE CustomerID = :CustomerID ";
             $stmt = $con->prepare($query);
 
             // Bind the parameter
-            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":CustomerID", $CustomerID);
 
             // execute our query
             $stmt->execute();
 
-            // store retrieved row to a variable
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $num = $stmt->rowCount();
 
-            // values to fill up our form
-            $id = $row['id'];
-            $username = $row['username'];
-            $first_name = $row['first_name'];
-            $last_name = $row['last_name'];
-            $gender = $row['gender'];
-            $date_of_birth = $row['date_of_birth'];
-            $account_status = $row['account_status'];
-            // shorter way to do that is extract($row)
+            if ($num > 0) {
+                // store retrieved row to a variable
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                // values to fill up our form
+                $username = $row['username'];
+                $password = $row['password'];
+                $first_name = $row['first_name'];
+                $last_name = $row['last_name'];
+                $gender = $row['gender'];
+                $date_of_birth = $row['date_of_birth'];
+                $registration_date_time = $row['registration_date_time'];
+                $account_status = $row['account_status'];
+                // shorter way to do that is extract($row)
+            } else {
+                die('ERROR: Record ID not found.');
+            }
         }
 
         // show error
@@ -61,20 +68,26 @@
         }
         ?>
 
-
-        <!-- HTML read one record table will be here -->
         <!--we have our html table here where the record will be displayed-->
         <table class='table table-hover table-responsive table-bordered'>
+            <tr>
+                <td>ID</td>
+                <td><?php echo htmlspecialchars($CustomerID, ENT_QUOTES);  ?></td>
+            </tr>
             <tr>
                 <td>Username</td>
                 <td><?php echo htmlspecialchars($username, ENT_QUOTES);  ?></td>
             </tr>
             <tr>
-                <td>First_name</td>
+                <td>Password</td>
+                <td><?php echo htmlspecialchars($password, ENT_QUOTES);  ?></td>
+            </tr>
+            <tr>
+                <td>First Name</td>
                 <td><?php echo htmlspecialchars($first_name, ENT_QUOTES);  ?></td>
             </tr>
             <tr>
-                <td>Last_name</td>
+                <td>Last Name</td>
                 <td><?php echo htmlspecialchars($last_name, ENT_QUOTES);  ?></td>
             </tr>
             <tr>
@@ -82,23 +95,27 @@
                 <td><?php echo htmlspecialchars($gender, ENT_QUOTES);  ?></td>
             </tr>
             <tr>
-                <td>Date of birth</td>
-                <td><?php echo htmlspecialchars($date_of_birth, ENT_QUOTES);  ?></td>
+                <td>Date of Birth</td>
+                <td><?php echo htmlspecialchars($date_of_birth, ENT_QUOTES); ?></td>
             </tr>
             <tr>
-                <td>Account status</td>
-                <td><?php echo htmlspecialchars($account_status, ENT_QUOTES);  ?></td>
+                <td>Registration Date Time</td>
+                <td><?php echo htmlspecialchars($registration_date_time, ENT_QUOTES); ?></td>
+            </tr>
+            <tr>
+                <td>Account</td>
+                <td><?php echo htmlspecialchars($account_status, ENT_QUOTES); ?></td>
             </tr>
             <tr>
                 <td></td>
                 <td>
-                    <a href='customer_read.php' class='btn btn-danger'>Back to read customer</a>
+                    <a href='customer_read.php' class='btn btn-danger'>Back to read products</a>
                 </td>
             </tr>
         </table>
 
-
-    </div> <!-- end .container -->
+    </div>
+    <!-- end .container -->
 
 </body>
 <footer class="container">

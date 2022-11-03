@@ -38,13 +38,16 @@
                             <a class="nav-link Activation" href="create_customer.php">Create Customer</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="customer_read.php">Customer riew</a>
+                            <a class="nav-link" href="customer_read.php">Customer riew</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="product_read.php">Product riew</a>
+                            <a class="nav-link" href="product_read.php">Product riew</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="Exercise.php">Contact Us</a>
+                            <a class="nav-link" href="create_new_order.php">Order List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Contact.php">Contact Us</a>
                         </li>
                     </ul>
                 </div>
@@ -65,7 +68,7 @@
         // delete message prompt will be here
 
         // select all data
-        $query = "SELECT id, username, first_name, last_name, gender, date_of_birth, account_status FROM customers ORDER BY id DESC";
+        $query = "SELECT CustomerID , username, first_name, last_name, gender, date_of_birth, account_status FROM customers ORDER BY CustomerID  DESC";
         $stmt = $con->prepare($query);
         $stmt->execute();
 
@@ -102,7 +105,7 @@
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td>{$id}</td>";
+                echo "<td>{$CustomerID}</td>";
                 echo "<td>{$username}</td>";
                 echo "<td>{$first_name}</td>";
                 echo "<td>{$last_name}</td>";
@@ -111,13 +114,13 @@
                 echo "<td>{$account_status}</td>";
                 echo "<td>";
                 // read one record
-                echo "<a href='customer_read_one.php?id={$id}' class='btn btn-info m-r-1em'>Read</a>";
+                echo "<a href='customer_read_one.php?id={$CustomerID}' class='btn btn-info m-r-1em'>Read</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='customer_update.php?id={$id}' class='btn btn-primary m-r-1em'>Edit</a>";
+                echo "<a href='customer_update.php?id={$CustomerID}' class='btn btn-primary m-r-1em'>Edit</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_product({$id});'  class='btn btn-danger'>Delete</a>";
+                echo "<a href='#' onclick='delete_product({$CustomerID});'  class='btn btn-danger'>Delete</a>";
                 echo "</td>";
                 echo "</tr>";
             }

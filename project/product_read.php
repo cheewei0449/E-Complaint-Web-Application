@@ -44,7 +44,10 @@
                             <a class="nav-link active" href="product_read.php">Product riew</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="Exercise.php">Contact Us</a>
+                            <a class="nav-link" href="create_new_order.php">Order List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Contact.php">Contact Us</a>
                         </li>
                     </ul>
                 </div>
@@ -65,7 +68,7 @@
         // delete message prompt will be here
 
         // select all data
-        $query = "SELECT id, name, description, price FROM products ORDER BY id DESC";
+        $query = "SELECT ProductID, name, description, price FROM products ORDER BY ProductID DESC";
         $stmt = $con->prepare($query);
         $stmt->execute();
 
@@ -98,19 +101,19 @@
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td>{$id}</td>";
+                echo "<td>{$ProductID}</td>";
                 echo "<td>{$name}</td>";
                 echo "<td>{$description}</td>";
                 echo "<td>{$price}</td>";
                 echo "<td>";
                 // read one record
-                echo "<a href='product_read_one.php?id={$id}' class='btn btn-info m-r-1em'>Read</a>";
+                echo "<a href='product_read_one.php?id={$ProductID}' class='btn btn-info m-r-1em'>Read</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='product_update.php?id={$id}' class='btn btn-primary m-r-1em'>Edit</a>";
+                echo "<a href='product_update.php?id={$ProductID}' class='btn btn-primary m-r-1em'>Edit</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_product({$id});'  class='btn btn-danger'>Delete</a>";
+                echo "<a href='#' onclick='delete_product({$ProductID});'  class='btn btn-danger'>Delete</a>";
                 echo "</td>";
                 echo "</tr>";
             }

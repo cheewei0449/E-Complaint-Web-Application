@@ -19,11 +19,10 @@
             <h1>Read Product</h1>
         </div>
 
-        <!-- PHP read one record will be here -->
         <?php
         // get passed parameter value, in this case, the record ID
         // isset() is a PHP function used to verify if a value is there or not
-        $id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
+        $ProductID = isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
 
         //include database connection
         include 'config/database.php';
@@ -31,23 +30,44 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT id, name, description, price FROM products WHERE id = :id ";
+            $query = "SELECT ProductID, name, description, price, promotion_price, manufacture_date, expired_date FROM products WHERE ProductID = :ProductID ";
             $stmt = $con->prepare($query);
 
             // Bind the parameter
-            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":ProductID", $ProductID);
 
             // execute our query
             $stmt->execute();
 
-            // store retrieved row to a variable
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $num = $stmt->rowCount();
 
-            // values to fill up our form
-            $name = $row['name'];
-            $description = $row['description'];
-            $price = $row['price'];
-            // shorter way to do that is extract($row)
+            if ($num > 0) {
+                // store retrieved row to a variable
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                // values to fill up our form
+                $name = $row['name'];
+                $description = $row['description'];
+                $price = $row['price'];
+                $promotion_price = $row['promotion_price'];
+                $manufacture_date = $row['manufacture_date'];
+                $expired_date = $row['expired_date'];
+                // shorter way to do that is extract($row)
+
+                if ($promotion_price == Null) {
+                    $promotion_price = "-";
+                }
+
+                if ($manufacture_date == Null) {
+                    $manufacture_date = "-";
+                }
+
+                if ($expired_date == Null) {
+                    $expired_date = "-";
+                }
+            } else {
+                die('ERROR: Record ID not found.');
+            }
         }
 
         // show error
@@ -56,10 +76,12 @@
         }
         ?>
 
-
-        <!-- HTML read one record table will be here -->
         <!--we have our html table here where the record will be displayed-->
         <table class='table table-hover table-responsive table-bordered'>
+            <tr>
+                <td>ID</td>
+                <td><?php echo htmlspecialchars($ProductID, ENT_QUOTES);  ?></td>
+            </tr>
             <tr>
                 <td>Name</td>
                 <td><?php echo htmlspecialchars($name, ENT_QUOTES);  ?></td>
@@ -70,7 +92,19 @@
             </tr>
             <tr>
                 <td>Price</td>
-                <td><?php echo htmlspecialchars($price, ENT_QUOTES);  ?></td>
+                <td><?php echo "RM ", htmlspecialchars($price, ENT_QUOTES); ?></td>
+            </tr>
+            <tr>
+                <td>Promotion Price</td>
+                <td><?php echo "RM ", htmlspecialchars($promotion_price, ENT_QUOTES); ?></td>
+            </tr>
+            <tr>
+                <td>Manufacture Date</td>
+                <td><?php echo htmlspecialchars($manufacture_date, ENT_QUOTES); ?></td>
+            </tr>
+            <tr>
+                <td>Expired Date</td>
+                <td><?php echo htmlspecialchars($expired_date, ENT_QUOTES); ?></td>
             </tr>
             <tr>
                 <td></td>
@@ -80,8 +114,8 @@
             </tr>
         </table>
 
-
-    </div> <!-- end .container -->
+    </div>
+    <!-- end .container -->
 
     </body>
     <footer class="container">
