@@ -77,7 +77,7 @@ include 'check.php';
     <!-- container -->
     <div class="container">
         <div class="page-header">
-            <h1>Read Customer</h1>
+            <h1>Order List</h1>
         </div>
 
         <!-- PHP code to read records will be here -->
@@ -88,16 +88,15 @@ include 'check.php';
         // delete message prompt will be here
 
         // select all data
-        $query = "SELECT CustomerID , username, first_name, last_name, gender, date_of_birth, account_status FROM customers ORDER BY CustomerID  DESC";
+        $query = "SELECT OrderID, CustomerID, order_date FROM order_summary ORDER BY OrderID DESC";
         $stmt = $con->prepare($query);
         $stmt->execute();
-
 
         // this is how to get number of rows returned
         $num = $stmt->rowCount();
 
         // link to create record form
-        echo "<a href='create_customer.php' class='btn btn-primary m-b-1em'>Create New customer</a>";
+        echo "<a href='create_new_order.php' class='btn btn-primary m-b-1em'>Create New Order</a>";
 
         //check if more than 0 record found
         if ($num > 0) {
@@ -107,15 +106,10 @@ include 'check.php';
 
             //creating our table heading
             echo "<tr>";
-            echo "<th>ID</th>";
-            echo "<th>Username</th>";
-            echo "<th>First name</th>";
-            echo "<th>Last name</th>";
-            echo "<th>Gender</th>";
-            echo "<th>Date of birth</th>";
-            echo "<th>Account status</th>";
+            echo "<th>Order ID</th>";
+            echo "<th>Customer ID</th>";
+            echo "<th>Order Date</th>";
             echo "</tr>";
-
 
             // table body will be here
             // retrieve our table contents
@@ -125,22 +119,18 @@ include 'check.php';
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
+                echo "<td>{$OrderID}</td>";
                 echo "<td>{$CustomerID}</td>";
-                echo "<td>{$username}</td>";
-                echo "<td>{$first_name}</td>";
-                echo "<td>{$last_name}</td>";
-                echo "<td>{$gender}</td>";
-                echo "<td>{$date_of_birth}</td>";
-                echo "<td>{$account_status}</td>";
+                echo "<td>{$order_date}</td>";
                 echo "<td>";
                 // read one record
-                echo "<a href='customer_read_one.php?id={$CustomerID}' class='btn btn-info m-r-1em'>Read</a>";
+                echo "<a href='product_read_one.php?id={$OrderID}' class='btn btn-info m-r-1em'>Read</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='customer_update.php?id={$CustomerID}' class='btn btn-primary m-r-1em'>Edit</a>";
+                echo "<a href='product_update.php?id={$OrderID}' class='btn btn-primary m-r-1em'>Edit</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_product({$CustomerID});'  class='btn btn-danger'>Delete</a>";
+                echo "<a href='#' onclick='delete_product({$OrderID});'  class='btn btn-danger'>Delete</a>";
                 echo "</td>";
                 echo "</tr>";
             }
@@ -156,7 +146,6 @@ include 'check.php';
     </div> <!-- end .container -->
 
     <!-- confirm delete record will be here -->
-
 </body>
 <footer class="container">
     <p class="float-end"><a class="text-decoration-none fw-bold" href="#">Back to top</a></p>

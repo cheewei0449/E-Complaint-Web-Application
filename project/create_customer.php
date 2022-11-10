@@ -1,11 +1,16 @@
 <!DOCTYPE HTML>
 <html>
+<?php
+include 'check.php';
+?>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Homework</title>
     <!-- Latest compiled and minified Bootstrap CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
@@ -32,23 +37,38 @@
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="index.php">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="product_create.php">Create Product</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="product_create.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Product
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="product_create.php">Create Product</a></li>
+                                <li><a class="dropdown-item" href="product_read.php">Product List</a></li>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link Activation" href="create_customer.php">Create Customer</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="create_customer.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Customer
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="create_customer.php">Create Customer</a></li>
+                                <li><a class="dropdown-item" href="customer_read.php">Customer riew</a></li>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="customer_read.php">Customer riew</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="product_read.php">Product riew</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="create_new_order.php">Order List</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="create_new_order.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Order
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="create_new_order.php">Create Order</a></li>
+                                <li><a class="dropdown-item" href="order_read.php">Order List</a></li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="Contact.php">Contact Us</a>
+                        </li>
+                        <li>
+                            <a class="btn btn-danger" href="logout.php">Logout</a>
                         </li>
                     </ul>
                 </div>

@@ -1,5 +1,8 @@
 <!DOCTYPE HTML>
 <html>
+<?php
+include 'check.php';
+?>
 
 <head>
     <title>PDO - Read One Record - PHP CRUD Tutorial</title>
