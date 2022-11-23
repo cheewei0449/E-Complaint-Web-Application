@@ -82,6 +82,18 @@ include 'check.php';
 
         <!-- PHP code to read records will be here -->
         <?php
+
+        if ($_GET) {
+            $message = $_GET['message'];
+
+            if ($message == "update_success") {
+                echo "<div class='alert alert-success'>Record was updated.</div>";
+            } else {
+                echo "<div class='alert alert-danger align-item-center'>Unknown error happened</div>";
+            }
+        }
+
+
         // include database connection
         include 'config/database.php';
 
@@ -124,10 +136,10 @@ include 'check.php';
                 echo "<td>{$order_date}</td>";
                 echo "<td>";
                 // read one record
-                echo "<a href='product_read_one.php?id={$OrderID}' class='btn btn-info m-r-1em'>Read</a>";
+                echo "<a href='order_read_one.php?id={$OrderID}' class='btn btn-info m-r-1em'>Read</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='product_update.php?id={$OrderID}' class='btn btn-primary m-r-1em'>Edit</a>";
+                echo "<a href='order_update.php?id={$OrderID}' class='btn btn-primary m-r-1em'>Edit</a>";
 
                 // we will use this links on next part of this post
                 echo "<a href='#' onclick='delete_product({$OrderID});'  class='btn btn-danger'>Delete</a>";

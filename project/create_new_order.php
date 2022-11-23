@@ -77,7 +77,7 @@ include 'check.php';
     <!-- container -->
     <div class="container">
         <div class="page-header">
-            <h1>Order ID</h1>
+            <h1>Order </h1>
         </div>
 
         <?php
