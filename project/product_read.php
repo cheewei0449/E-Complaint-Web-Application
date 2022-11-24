@@ -18,9 +18,9 @@ include 'check.php';
 </head>
 
 <body>
-<?php
-  include "header_navbar.php";
-  ?>
+    <?php
+    include "header_navbar.php";
+    ?>
     <!-- container -->
     <div class="container">
         <div class="page-header">
@@ -33,6 +33,13 @@ include 'check.php';
         include 'config/database.php';
 
         // delete message prompt will be here
+        $action = isset($_GET['action']) ? $_GET['action'] : "";
+
+        // if it was redirected from delete.php
+        if ($action == 'deleted') {
+            echo "<div class='alert alert-success'>Record was deleted.</div>";
+        }
+
 
         // select all data
         $query = "SELECT ProductID, name, description, price FROM products ORDER BY ProductID DESC";
@@ -80,7 +87,7 @@ include 'check.php';
                 echo "<a href='product_update.php?id={$ProductID}' class='btn btn-primary m-r-1em'>Edit</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_product({$ProductID});'  class='btn btn-danger'>Delete</a>";
+                echo "<a href='#' onclick='delete_user({$ProductID});'  class='btn btn-danger'>Delete</a>";
                 echo "</td>";
                 echo "</tr>";
             }
@@ -96,6 +103,19 @@ include 'check.php';
     </div> <!-- end .container -->
 
     <!-- confirm delete record will be here -->
+    <script type='text/javascript'>
+        // confirm record deletion
+        function delete_user(id) {
+
+            if (confirm('Are you sure?')) {
+                // if user clicked ok,
+                // pass the id to delete.php and execute the delete query
+                window.location = 'product_delete.php?id=' + id;
+            }
+        }
+    </script>
+
+
 </body>
 <footer class="container">
     <p class="float-end"><a class="text-decoration-none fw-bold" href="#">Back to top</a></p>

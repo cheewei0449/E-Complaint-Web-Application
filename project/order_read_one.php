@@ -149,8 +149,8 @@ include 'check.php';
                             <tr>
                                 <th class="text-center">Product</th>
                                 <th class="text-center">Quantity</th>
-                                <th class="text-center">Unit Price</th>
-                                <th class="text-center">Price</th>
+                                <th class="text-end">Unit Price (RM)</th>
+                                <th class="text-end">Price (RM)</th>
                             </tr>
                             <?php
 
@@ -183,8 +183,8 @@ include 'check.php';
                                     echo "<tr>";
                                     echo "<td>$no. {$row_product['name']}</td>";
                                     echo "<td>{$row['quantity']}</td>";
-                                    echo "<td>RM {$row_product['price']}</td>";
-                                    echo "<td>RM $total_unit_price</td>";
+                                    echo "<td class = 'text-end'>".number_format(round($row_product['price'],1),2)."</td>";
+                                    echo "<td class = 'text-end'>".number_format(round($total_unit_price,1),2)."</td>";
                                     echo "</tr>";
 
                                     $no++;
@@ -200,7 +200,7 @@ include 'check.php';
                                 <th colspan="3" class="text-end">
                                     <p class="me-3 my-2 fs-5">Total</p>
                                 </th>
-                                <td><?php echo "<p class='me-3 my-2 fs-5'>RM $total_amount</p>" ?></td>
+                                <td><?php echo "<p class=' my-2 fs-5 text-end'>".number_format(round($total_amount,1),2)." </p>" ?></td>
                             </tr>
                         </tbody>
                     </table>

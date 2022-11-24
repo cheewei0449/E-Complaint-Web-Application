@@ -53,7 +53,7 @@ include 'check.php';
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT ProductID, name, description, price FROM products WHERE ProductID = ? LIMIT 0,1";
+            $query = "SELECT ProductID, name, description, price , promotion_price ,manufacture_date , expired_date  FROM products WHERE ProductID = ? LIMIT 0,1";
             $stmt = $con->prepare($query);
 
             // this is the first question mark
@@ -70,6 +70,9 @@ include 'check.php';
                 $name = $row['name'];
                 $description = $row['description'];
                 $price = $row['price'];
+                $promotion_price = $row['promotion_price'];
+                $manufacture_date = $row['manufacture_date'];
+                $expired_date = $row['expired_date'];
             
         }
 
@@ -90,18 +93,26 @@ include 'check.php';
                 // it is better to label them and not use question marks
                 $query = "UPDATE products
                   SET name=:name, description=:description,
-                  price=:price WHERE ProductID = :ProductID";
+                  price=:price, promotion_price=:promotion_price,manufacture_date=:manufacture_date,expired_date=:expired_date WHERE ProductID = :ProductID";
                 // prepare query for excecution
                 $stmt = $con->prepare($query);
                 // posted values
                 $name = $_POST['name'];
                 $description = $_POST['description'];
                 $price = $_POST['price'];
+                $promotion_price = $_POST['promotion_price'];
+                $manufacture_date = $_POST['manufacture_date'];
+                $expired_date = $_POST['expired_date'];
+
                 // bind the parameters
                 $stmt->bindParam(':name', $name);
                 $stmt->bindParam(':description', $description);
                 $stmt->bindParam(':price', $price);
                 $stmt->bindParam(':ProductID', $id);
+                $stmt->bindParam(':promotion_price', $promotion_price);
+                $stmt->bindParam(':manufacture_date', $manufacture_date);
+                $stmt->bindParam(':expired_date', $expired_date);
+
                 // Execute the query
                 if ($stmt->execute()) {
                     echo "<div class='alert alert-success'>Record was updated.</div>";
@@ -130,6 +141,18 @@ include 'check.php';
                     <td>Price</td>
                     <td><input type='text' name='price' value="<?php echo $price;  ?>" class='form-control' /></td>
                 </tr>
+                <tr>
+                        <td>Promotion_price</td>
+                        <td><input type='number' name='promotion_price' value="<?php echo $promotion_price;  ?>" class='form-control' /></td>
+                    </tr>
+                    <tr>
+                        <td>Manufacture_date</td>
+                        <td><input type='date' name='manufacture_date' value="<?php echo $manufacture_date;  ?>" class='form-control' /></td>
+                    </tr>
+                    <tr>
+                        <td>Expired_date</td>
+                        <td><input type='date' name='expired_date' value="<?php echo $expired_date;  ?>" class='form-control' /></td>
+                    </tr>
                 <tr>
                     <td></td>
                     <td>

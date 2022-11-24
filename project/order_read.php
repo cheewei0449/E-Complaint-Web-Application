@@ -34,7 +34,10 @@ include "header_navbar.php";
 
         if ($message == "update_success") {
             echo "<div class='alert alert-success'>Record was updated.</div>";
-        } else {
+        } 
+        else if ($message == 'deleted') {
+            echo "<div class='alert alert-success'>Record was deleted.</div>";
+        }else {
             echo "<div class='alert alert-danger align-item-center'>Unknown error happened</div>";
         }
     }
@@ -44,9 +47,25 @@ include "header_navbar.php";
     include 'config/database.php';
 
     // delete message prompt will be here
+    $action = isset($_GET['action']) ? $_GET['action'] : "";
+
+    // if it was redirected from delete.php
+    if ($action == 'deleted') {
+        echo "<div class='alert alert-success'>Record was deleted.</div>";
+    }
+
 
     // select all data
-    $query = "SELECT OrderID, CustomerID, order_date FROM order_summary ORDER BY OrderID DESC";
+    $query = "SELECT order_summary.OrderID, first_name, last_name, order_date, sum(quantity * price) as total_price FROM order_summary 
+    INNER JOIN customers 
+    ON order_summary.CustomerID = customers.CustomerID
+    INNER JOIN order_detail
+    ON order_summary.OrderID = order_detail.OrderID
+    INNER JOIN products
+    ON order_detail.ProductID = products.ProductID
+    GROUP BY order_detail.OrderID";
+
+
     $stmt = $con->prepare($query);
     $stmt->execute();
 
@@ -65,7 +84,9 @@ include "header_navbar.php";
         //creating our table heading
         echo "<tr>";
         echo "<th>Order ID</th>";
-        echo "<th>Customer ID</th>";
+        echo "<th>First Name</th>";
+        echo "<th>Last Name</th>";
+        echo "<th class = 'text-end'>Total (RM)</th>";
         echo "<th>Order Date</th>";
         echo "</tr>";
 
@@ -78,7 +99,9 @@ include "header_navbar.php";
             // creating new table row per record
             echo "<tr>";
             echo "<td>{$OrderID}</td>";
-            echo "<td>{$CustomerID}</td>";
+            echo "<td>{$first_name}</td>";
+            echo "<td>{$last_name}</td>";
+            echo "<td class = 'text-end'>" . number_format(round($total_price, 1), 2) . "</td>";
             echo "<td>{$order_date}</td>";
             echo "<td>";
             // read one record
@@ -88,7 +111,7 @@ include "header_navbar.php";
             echo "<a href='order_update.php?id={$OrderID}' class='btn btn-primary m-r-1em'>Edit</a>";
 
             // we will use this links on next part of this post
-            echo "<a href='#' onclick='delete_product({$OrderID});'  class='btn btn-danger'>Delete</a>";
+            echo "<a href='#' onclick='delete_user({$OrderID});'  class='btn btn-danger'>Delete</a>";
             echo "</td>";
             echo "</tr>";
         }
@@ -104,6 +127,18 @@ include "header_navbar.php";
 </div> <!-- end .container -->
 
 <!-- confirm delete record will be here -->
+<script type='text/javascript'>
+    // confirm record deletion
+    function delete_user(id) {
+
+        if (confirm('Are you sure?')) {
+            // if user clicked ok,
+            // pass the id to delete.php and execute the delete query
+            window.location = 'order_delete.php?id=' + id;
+        }
+    }
+</script>
+
 </body>
 <footer class="container">
     <p class="float-end"><a class="text-decoration-none fw-bold" href="#">Back to top</a></p>
