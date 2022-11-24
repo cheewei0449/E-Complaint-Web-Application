@@ -90,7 +90,7 @@ include 'check.php';
 
             if ($_POST) {
                 $username = $_POST['username'];
-                $old_password = $_POST['old_password'];
+                $old_password = md5($_POST['old_password']);
                 $new_password = $_POST['new_password'];
                 $confirm_password = $_POST['confirm_password'];
                 $first_name = $_POST['first_name'];
@@ -165,7 +165,7 @@ include 'check.php';
                     if ($old_password == "" && $new_password == "" && $confirm_password == "") {
                         $stmt->bindParam(':password', $pass);
                     } else {
-                        $stmt->bindParam(':password', $new_password);
+                        $stmt->bindParam(':password', md5($new_password));
                     }
                     $stmt->bindParam(':first_name', $first_name);
                     $stmt->bindParam(':last_name', $last_name);
