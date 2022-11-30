@@ -31,6 +31,20 @@ include 'check.php';
         <?php
         // include database connection
         include 'config/database.php';
+        if ($_GET) {
+            // delete message prompt will be here
+            $message = isset($_GET['message']) ? $_GET['message'] : "";
+            // if it was redirected from delete.php
+            if ($message == "update_success") {
+                echo "<div class = 'alert alert-success'> Record was upload.</div>";
+            } else if ($message == "products_in_use") {
+                echo "<div class = 'alert alert-danger'>The Products have be founded in order(Please delete specific order before delete products)</div>";
+            } else if ($message == "deleted") {
+                echo "<div class='alert alert-success'>Record was deleted.</div>";
+            } else {
+                echo "<div class='alert alert-danger'>Unknown error happened.</div>";
+            }
+        }
 
         // delete message prompt will be here
         $action = isset($_GET['action']) ? $_GET['action'] : "";
