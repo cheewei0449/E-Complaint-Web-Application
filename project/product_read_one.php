@@ -36,7 +36,7 @@ include 'check.php';
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT ProductID, name, description, price, promotion_price, manufacture_date, expired_date FROM products WHERE ProductID = :ProductID ";
+            $query = "SELECT ProductID, name, description, price, promotion_price,image, manufacture_date, expired_date FROM products WHERE ProductID = :ProductID ";
             $stmt = $con->prepare($query);
 
             // Bind the parameter
@@ -56,6 +56,7 @@ include 'check.php';
                 $description = $row['description'];
                 $price = $row['price'];
                 $promotion_price = $row['promotion_price'];
+                $image = $row['image'];
                 $manufacture_date = $row['manufacture_date'];
                 $expired_date = $row['expired_date'];
                 // shorter way to do that is extract($row)
@@ -104,6 +105,9 @@ include 'check.php';
                 <td>Promotion Price</td>
                 <td><?php echo "RM ", htmlspecialchars($promotion_price, ENT_QUOTES); ?></td>
             </tr>
+            <tr>
+                    <td colspan="2" class="text-center"><img src="uploads/<?php echo htmlspecialchars($image, ENT_QUOTES);?>" alt="Image not found" width="250px"></td>
+                </tr>
             <tr>
                 <td>Manufacture Date</td>
                 <td><?php echo htmlspecialchars($manufacture_date, ENT_QUOTES); ?></td>

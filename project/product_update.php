@@ -53,7 +53,7 @@ include 'check.php';
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT ProductID, name, description, price , promotion_price ,manufacture_date , expired_date  FROM products WHERE ProductID = ? LIMIT 0,1";
+            $query = "SELECT ProductID, name, description, price ,image as old_image, promotion_price ,manufacture_date , expired_date  FROM products WHERE ProductID = ? LIMIT 0,1";
             $stmt = $con->prepare($query);
 
             // this is the first question mark
@@ -63,17 +63,16 @@ include 'check.php';
             $stmt->execute();
 
 
-                // store retrieved row to a variable
-                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            // store retrieved row to a variable
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                // values to fill up our form
-                $name = $row['name'];
-                $description = $row['description'];
-                $price = $row['price'];
-                $promotion_price = $row['promotion_price'];
-                $manufacture_date = $row['manufacture_date'];
-                $expired_date = $row['expired_date'];
-            
+            // values to fill up our form
+            $name = $row['name'];
+            $description = $row['description'];
+            $price = $row['price'];
+            $promotion_price = $row['promotion_price'];
+            $manufacture_date = $row['manufacture_date'];
+            $expired_date = $row['expired_date'];
         }
 
         // show error
@@ -87,51 +86,122 @@ include 'check.php';
         <?php
         // check if form was submitted
         if ($_POST) {
-            try {
-                // write update query
-                // in this case, it seemed like we have so many fields to pass and
-                // it is better to label them and not use question marks
-                $query = "UPDATE products
-                  SET name=:name, description=:description,
-                  price=:price, promotion_price=:promotion_price,manufacture_date=:manufacture_date,expired_date=:expired_date WHERE ProductID = :ProductID";
-                // prepare query for excecution
-                $stmt = $con->prepare($query);
-                // posted values
-                $name = $_POST['name'];
-                $description = $_POST['description'];
-                $price = $_POST['price'];
-                $promotion_price = $_POST['promotion_price'];
-                $manufacture_date = $_POST['manufacture_date'];
-                $expired_date = $_POST['expired_date'];
+            // posted values
+            $name = $_POST['name'];
+            $description = $_POST['description'];
+            $price = $_POST['price'];
+            $promotion_price = $_POST['promotion_price'];
+            $manufacture_date = $_POST['manufacture_date'];
+            $expired_date = $_POST['expired_date'];
 
-                // bind the parameters
-                $stmt->bindParam(':name', $name);
-                $stmt->bindParam(':description', $description);
-                $stmt->bindParam(':price', $price);
-                $stmt->bindParam(':ProductID', $id);
-                $stmt->bindParam(':promotion_price', $promotion_price);
-                $stmt->bindParam(':manufacture_date', $manufacture_date);
-                $stmt->bindParam(':expired_date', $expired_date);
+            $validated = true;
 
-                // Execute the query
-                if ($stmt->execute()) {
-                    echo "<div class='alert alert-success'>Record was updated.</div>";
-                } else {
-                    echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
+            if ($name == "" || $description == "" || $price == "" || $manufacture_date == "") {
+                echo "<div class='alert alert-danger'>Please make sure all fields are not empty</div>";
+                $validated = false;
+            }
+
+            if ($promotion_price == "") {
+                $promotion_price = NULL;
+            }
+
+            if ($expired_date == "") {
+                $expired_date = NULL;
+            } else if ($expired_date < $manufacture_date) {
+                echo "<div class='alert alert-danger'>Expired date should be later than manufacture date</div>";
+                $validated = false;
+            }
+
+            if (!is_numeric($price)) {
+                echo "<div class='alert alert-danger'>All Prices should be numbers only</div>";
+            } else if ($price > 1000) {
+                echo "<div class='alert alert-danger'>Price cannot exceed RM1000</div>";
+                $validated = false;
+            } else if ($price < 0) {
+                echo "<div class='alert alert-danger'>Price cannot be negative</div>";
+                $validated = false;
+            }
+            if ($promotion_price > $price) {
+                echo "<div class='alert alert-danger'>Promotion price should be cheaper than original price</div>";
+                $validated = false;
+            }
+
+            if (empty($_FILES["image"]["name"])) {
+                $new_image = $old_image;
+            } else {
+                if ($old_image != "") {
+                    unlink("uploads/$old_image");
+                }
+                include "image_uploaded.php";
+                $new_image = $image;
+            }
+
+            if ($validated) {
+                try {
+                    // write update query
+                    // in this case, it seemed like we have so many fields to pass and
+                    // it is better to label them and not use question marks
+                    $query = "UPDATE products SET name=:name, description=:description, price=:price, image=:image, promotion_price=:promotion_price, manufacture_date=:manufacture_date, expired_date=:expired_date WHERE ProductID=:ProductID";
+                    // prepare query for excecution
+                    $stmt = $con->prepare($query);
+                    // bind the parameters
+                    $stmt->bindParam(':name', $name);
+                    $stmt->bindParam(':description', $description);
+                    $stmt->bindParam(':price', $price);
+                    $stmt->bindParam(':ProductID', $id);
+                    $stmt->bindParam(':promotion_price', $promotion_price);
+                    $stmt->bindParam(':image', $new_image);
+                    $stmt->bindParam(':manufacture_date', $manufacture_date);
+                    $stmt->bindParam(':expired_date', $expired_date);
+                    $stmt->bindParam(':image', $image);
+
+
+                    // Execute the query
+                    if (empty($file_upload_error_messages)) {
+
+                        if ($stmt->execute()) {
+                            if (!empty($_FILES["image"]["name"])) {
+                                //so try to upload the file
+                                if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+                                    // it means photo was uploaded
+                                    header("Location: product_read.php?message=update_success");
+                                    ob_end_flush();
+                                } else {
+                                    echo "<div class='alert alert-danger'>";
+                                    echo "<div>Unable to upload photo.</div>";
+                                    echo "<div>Update the record to upload photo.</div>";
+                                    echo "</div>";
+                                }
+                            } else {
+                                header("Location: product_read.php?message=update_success");
+                                ob_end_flush();
+                            }
+                        } else {
+                            echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
+                        }
+                    } // if $file_upload_error_messages is NOT empty
+                    else {
+                        // it means there are some errors, so show them to user
+                        echo "<div class='alert alert-danger'>";
+                        echo "<div>{$file_upload_error_messages}</div>";
+                        echo "<div>Update the record to upload photo.</div>";
+                        echo "</div>";
+                    }
+                }
+                // show errors
+                catch (PDOException $exception) {
+                    die('ERROR: ' . $exception->getMessage());
                 }
             }
-            // show errors
-            catch (PDOException $exception) {
-                die('ERROR: ' . $exception->getMessage());
-            }
         } ?>
+
 
         <!--we have our html form here where new record information can be updated-->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post">
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Name</td>
-                    <td><input type='text' name='name' value="<?php echo $name ;  ?>" class='form-control' /></td>
+                    <td><input type='text' name='name' value="<?php echo $name;  ?>" class='form-control' /></td>
                 </tr>
                 <tr>
                     <td>Description</td>
@@ -142,17 +212,21 @@ include 'check.php';
                     <td><input type='text' name='price' value="<?php echo $price;  ?>" class='form-control' /></td>
                 </tr>
                 <tr>
-                        <td>Promotion_price</td>
-                        <td><input type='number' name='promotion_price' value="<?php echo $promotion_price;  ?>" class='form-control' /></td>
-                    </tr>
-                    <tr>
-                        <td>Manufacture_date</td>
-                        <td><input type='date' name='manufacture_date' value="<?php echo $manufacture_date;  ?>" class='form-control' /></td>
-                    </tr>
-                    <tr>
-                        <td>Expired_date</td>
-                        <td><input type='date' name='expired_date' value="<?php echo $expired_date;  ?>" class='form-control' /></td>
-                    </tr>
+                    <td>Promotion_price</td>
+                    <td><input type='number' name='promotion_price' value="<?php echo $promotion_price;  ?>" class='form-control' /></td>
+                </tr>
+                <tr>
+                    <td>Photo</td>
+                    <td><input type="file" name="image" /></td>
+                </tr>
+                <tr>
+                    <td>Manufacture_date</td>
+                    <td><input type='date' name='manufacture_date' value="<?php echo $manufacture_date;  ?>" class='form-control' /></td>
+                </tr>
+                <tr>
+                    <td>Expired_date</td>
+                    <td><input type='date' name='expired_date' value="<?php echo $expired_date;  ?>" class='form-control' /></td>
+                </tr>
                 <tr>
                     <td></td>
                     <td>
