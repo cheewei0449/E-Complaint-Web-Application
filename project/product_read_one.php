@@ -106,8 +106,9 @@ include 'check.php';
                 <td><?php echo "RM ", htmlspecialchars($promotion_price, ENT_QUOTES); ?></td>
             </tr>
             <tr>
-                    <td colspan="2" class="text-center"><img src="uploads/<?php echo htmlspecialchars($image, ENT_QUOTES);?>" alt="Image not found" width="250px"></td>
-                </tr>
+                <td>Photo</td>
+                <td class="text-center"><img src="uploads/<?php echo htmlspecialchars($image, ENT_QUOTES); ?>" alt="Image not found" width="250px"></td>
+            </tr>
             <tr>
                 <td>Manufacture Date</td>
                 <td><?php echo htmlspecialchars($manufacture_date, ENT_QUOTES); ?></td>

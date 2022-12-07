@@ -45,7 +45,7 @@ include 'check.php';
 
 
                 if ($name == "" || $description == "" || $price == "" || $manufacture_date == "") {
-                    echo "<div class='alert alert-danger'>Please make sure all fields are not empty</div>";
+                    echo "<div class='alert alert-danger'>Pls don't have empty.</div>";
                     $validated = false;
                 }
 
@@ -63,10 +63,10 @@ include 'check.php';
                 if (!is_numeric($price)) {
                     echo "<div class='alert alert-danger'>All Prices should be numbers only</div>";
                 } else if ($price > 1000) {
-                    echo "<div class='alert alert-danger'>Price cannot exceed RM1000</div>";
+                    echo "<div class='alert alert-danger'>The price can't more than 1000</div>";
                     $validated = false;
                 } else if ($price < 0) {
-                    echo "<div class='alert alert-danger'>Price cannot be negative</div>";
+                    echo "<div class='alert alert-danger'>Price can't negative</div>";
                     $validated = false;
                 }
                 if ($promotion_price > $price) {
@@ -74,6 +74,7 @@ include 'check.php';
                     $validated = false;
                 }
 
+                
                 if (!empty($_FILES["image"]["name"])) {
                     include "image_uploaded.php";
                 }
@@ -83,7 +84,7 @@ include 'check.php';
                     include 'config/database.php';
                     try {
                         // insert query
-                        $query = "INSERT INTO products SET name=:name, description=:description, price=:price, created=:created, promotion_price=:promotion_price, manufacture_date=:manufacture_date, expired_date=:expired_date";
+                        $query = "INSERT INTO products SET name=:name, description=:description, price=:price, created=:created, promotion_price=:promotion_price,image = :image , manufacture_date=:manufacture_date, expired_date=:expired_date";
                         // prepare query for execution
                         $stmt = $con->prepare($query);
 
@@ -94,6 +95,7 @@ include 'check.php';
                         $created = date('Y-m-d H:i:s'); // get the current date and time
                         $stmt->bindParam(':created', $created);
                         $stmt->bindParam(':promotion_price', $promotion_price);
+                        $stmt->bindParam(':image', $image);
                         $stmt->bindParam(':manufacture_date', $manufacture_date);
                         $stmt->bindParam(':expired_date', $expired_date);
 
@@ -139,7 +141,7 @@ include 'check.php';
 
 
             <!-- html form here where the product information will be entered -->
-            <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
+            <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data" >
                 <table class='table table-hover table-responsive table-bordered'>
                     <tr>
                         <td>Name</td>

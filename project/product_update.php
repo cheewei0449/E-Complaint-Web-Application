@@ -115,10 +115,10 @@ include 'check.php';
             if (!is_numeric($price)) {
                 echo "<div class='alert alert-danger'>All Prices should be numbers only</div>";
             } else if ($price > 1000) {
-                echo "<div class='alert alert-danger'>Price cannot exceed RM1000</div>";
+                echo "<div class='alert alert-danger'>The price can't more than 1000</div>";
                 $validated = false;
             } else if ($price < 0) {
-                echo "<div class='alert alert-danger'>Price cannot be negative</div>";
+                echo "<div class='alert alert-danger'>Price can't negative</div>";
                 $validated = false;
             }
             if ($promotion_price > $price) {
@@ -197,7 +197,7 @@ include 'check.php';
 
 
         <!--we have our html form here where new record information can be updated-->
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post" enctype="multipart/form-data">
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Name</td>
