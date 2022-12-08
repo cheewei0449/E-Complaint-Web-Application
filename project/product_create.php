@@ -65,7 +65,7 @@ include 'check.php';
                 } else if ($price > 1000) {
                     echo "<div class='alert alert-danger'>The price can't more than 1000</div>";
                     $validated = false;
-                } else if ($price < 0) {
+                } else if ($price < 1) {
                     echo "<div class='alert alert-danger'>Price can't negative</div>";
                     $validated = false;
                 }
@@ -74,10 +74,13 @@ include 'check.php';
                     $validated = false;
                 }
 
-                
+
                 if (!empty($_FILES["image"]["name"])) {
                     include "image_uploaded.php";
+                } else {
+                    $image = "";
                 }
+
 
                 if ($validated) {
                     // include database connection
@@ -141,7 +144,7 @@ include 'check.php';
 
 
             <!-- html form here where the product information will be entered -->
-            <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data" >
+            <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
                 <table class='table table-hover table-responsive table-bordered'>
                     <tr>
                         <td>Name</td>

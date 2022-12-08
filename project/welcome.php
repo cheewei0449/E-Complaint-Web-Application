@@ -184,7 +184,7 @@ Top 5 selling Products  -->
                     <div class="col-12 col-md align-self-center">
                         <div class="p-3 bg-white  text-center">
                             <h4 class="fw-semibold text-black ">Purchase Amount <br>
-                                <p class='my-2 fs-3 text-black fw-bolder'><?php echo isset($total_price) ? "RM" . $total_price : "No Record Found" ?></p>
+                                <p class='my-2 fs-3 text-black fw-bolder'><?php echo isset($total_price) ? "RM" .   number_format(round($total_price, 1), 2) : "No Record Found" ?></p>
                         </div>
                     </div>
                 </div>
@@ -208,33 +208,33 @@ Top 5 selling Products  -->
                     <div class="col-12 col-md align-self-center">
                         <div class="p-3 bg-white  text-center">
                             <h4 class="fw-semibold text-black ">Purchase Amount <br>
-                                <p class='my-2 fs-3 text-black fw-bolder'><?php echo isset($highest_price) ? "RM" . $highest_price : "No Record Found" ?></p>
+                                <p class='my-2 fs-3 text-black fw-bolder'><?php echo isset($highest_price) ? "RM" . number_format(round($highest_price, 1), 2) : "No Record Found" ?></p>
                         </div>
                     </div>
                 </div>
                 <div class="row gx-0 gx-md-5 gy-5 mt-3">
 
                     <div class="col-12 col-md-6">
-                    <table class='table  table-striped table-bordered border-secondary text-center'>
-                        <tr class="table-dark">
-                            <th colspan="2">The Top 5 Selling Products</th>
-                        </tr>
-                        <?php
+                        <table class='table  table-striped table-bordered border-secondary text-center'>
+                            <tr class="table-dark">
+                                <th colspan="2">The Top 5 Selling Products</th>
+                            </tr>
+                            <?php
 
-                        if ($num_no > 0) {
-                            while ($row_top = $stmt_top->fetch(PDO::FETCH_ASSOC)) {
-                                extract($row_top);
-                                echo "<tr class=\"table-light\">";
-                                echo "<th class=\"text-center\">$top_name</th>";
-                                echo "<th>$top_quantity</th>";
-                                echo "</tr>";
+                            if ($num_no > 0) {
+                                while ($row_top = $stmt_top->fetch(PDO::FETCH_ASSOC)) {
+                                    extract($row_top);
+                                    echo "<tr class=\"table-light\">";
+                                    echo "<th class=\"text-center\">$top_name</th>";
+                                    echo "<th>$top_quantity</th>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<div class='alert alert-danger'>No records found.</div>";
                             }
-                        } else {
-                            echo "<div class='alert alert-danger'>No records found.</div>";
-                        }
-                        ?>
-                    </table>
-                </div>
+                            ?>
+                        </table>
+                    </div>
                     <div class="col-12 col-md-6 ">
                         <table class='table table-striped table-bordered border-secondary text-center'>
                             <tr class="table-dark">
@@ -259,7 +259,7 @@ Top 5 selling Products  -->
                         </table>
                     </div>
                 </div>
-                </div>
+            </div>
         </main>
         <!-- FOOTER -->
         <footer class="container">
