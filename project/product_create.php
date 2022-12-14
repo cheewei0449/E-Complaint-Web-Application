@@ -55,9 +55,14 @@ include 'check.php';
 
                 if ($expired_date == "") {
                     $expired_date = NULL;
-                } else if ($expired_date < $manufacture_date) {
-                    echo "<div class='alert alert-danger'>Expired date should be later than manufacture date</div>";
-                    $validated = false;
+                } else if ($expired_date != "") {
+                    $date1 = date_create($expired_date);
+                    $date2 = date_create($manufacture_date);
+                    $expired_check = date_diff($date2, $date1);
+                    if ($expired_check->format("%R%a") < 0) {
+                        $file_upload_error_messages .= "<div class='alert alert-danger'>The expired date can not be earlier than the manufacture date.</div>";
+                        $validation = false;
+                    }
                 }
 
                 if (!is_numeric($price)) {
@@ -65,7 +70,7 @@ include 'check.php';
                 } else if ($price > 1000) {
                     echo "<div class='alert alert-danger'>The price can't more than 1000</div>";
                     $validated = false;
-                } else if ($price < 1) {
+                } else if ($price < 0) {
                     echo "<div class='alert alert-danger'>Price can't negative</div>";
                     $validated = false;
                 }
@@ -111,7 +116,6 @@ include 'check.php';
                                 if (!empty($_FILES["image"]["name"])) {
                                     //so try to upload the file
                                     if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                                        // it means photo was uploaded
                                     } else {
                                         echo "<div class='alert alert-danger'>";
                                         echo "<div>Unable to upload photo.</div>";
@@ -122,9 +126,8 @@ include 'check.php';
                             } else {
                                 echo "<div class='alert alert-danger'>Unable to save record.</div>";
                             }
-                        } // if $file_upload_error_messages is NOT empty
+                        } 
                         else {
-                            // it means there are some errors, so show them to user
                             echo "<div class='alert alert-danger'>";
                             echo "<div>{$file_upload_error_messages}</div>";
                             echo "<div>Update the record to upload photo.</div>";

@@ -35,7 +35,7 @@ include 'check.php';
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT CustomerID, username, password, first_name, last_name, gender, date_of_birth, registration_date_time, account_status FROM customers WHERE CustomerID = :CustomerID ";
+            $query = "SELECT CustomerID, username,customer_image, password, first_name, last_name, gender, date_of_birth, registration_date_time, account_status FROM customers WHERE CustomerID = :CustomerID ";
             $stmt = $con->prepare($query);
 
             // Bind the parameter
@@ -55,6 +55,7 @@ include 'check.php';
                 $password = $row['password'];
                 $first_name = $row['first_name'];
                 $last_name = $row['last_name'];
+                $customer_image = $row['customer_image'];
                 $gender = $row['gender'];
                 $date_of_birth = $row['date_of_birth'];
                 $registration_date_time = $row['registration_date_time'];
@@ -92,6 +93,10 @@ include 'check.php';
             <tr>
                 <td>Last Name</td>
                 <td><?php echo htmlspecialchars($last_name, ENT_QUOTES);  ?></td>
+            </tr>
+            <tr>
+                <td>User Image</td>
+                <td class="text-center"><img src="uploads/<?php echo htmlspecialchars($customer_image, ENT_QUOTES); ?>" alt="Image not found" width="250px"></td>
             </tr>
             <tr>
                 <td>Gender</td>

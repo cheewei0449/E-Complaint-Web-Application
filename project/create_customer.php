@@ -19,9 +19,9 @@ include 'check.php';
 </head>
 
 <body>
-<?php
-  include "header_navbar.php";
-  ?>
+    <?php
+    include "header_navbar.php";
+    ?>
     <main>
         <!-- container -->
         <div class="container">
@@ -66,7 +66,7 @@ include 'check.php';
                     echo "<div class='alert alert-danger'>The password not same.</div>";
                     $vaildation = false;
                 } else {
-                    $password=md5($password);
+                    $password = md5($password);
                 }
 
                 if ($date_of_birth > date('Y-m-d')) {
@@ -80,6 +80,12 @@ include 'check.php';
                 if ($age <= 18) {
                     echo "<div class='alert alert-danger'>Need 18 Age </div>";
                     $vaildation = false;
+                }
+
+                if (!empty($_FILES["image"]["name"])) {
+                    include "image_uploaded.php";
+                } else {
+                    $customer_image = "";
                 }
 
 
@@ -102,11 +108,32 @@ include 'check.php';
                         $registration_date_time = date('Y-m-d H:i:s'); // get the current date and time
                         $stmt->bindParam(':registration_date_time', $registration_date_time);
                         $stmt->bindParam(':account_status', $account_status);
+                        $stmt->bindParam(':customer_image', $customer_image);
                         // Execute the query
-                        if ($stmt->execute()) {
-                            echo "<div class='alert alert-success'>Record was saved.</div>";
+
+                        if (empty($file_upload_error_messages)) {
+                            // Execute the query
+                            if ($stmt->execute()) {
+                                echo "<div class='alert alert-success'>Record was saved.</div>";
+
+                                if (!empty($_FILES["image"]["name"])) {
+                                    //so try to upload the file
+                                    if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+                                    } else {
+                                        echo "<div class='alert alert-danger'>";
+                                        echo "<div>Unable to upload photo.</div>";
+                                        echo "<div>Update the record to upload photo.</div>";
+                                        echo "</div>";
+                                    }
+                                }
+                            } else {
+                                echo "<div class='alert alert-danger'>Unable to save record.</div>";
+                            }
                         } else {
-                            echo "<div class='alert alert-danger'>Unable to save record.</div>";
+                            echo "<div class='alert alert-danger'>";
+                            echo "<div>{$file_upload_error_messages}</div>";
+                            echo "<div>Update the record to upload photo.</div>";
+                            echo "</div>";
                         }
                     }
                     // show error
@@ -127,7 +154,7 @@ include 'check.php';
 
 
             <!-- html form here where the product information will be entered -->
-            <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
+            <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
                 <table class='table table-hover table-responsive table-bordered'>
                     <tr>
                         <td>Username</td>
@@ -148,6 +175,10 @@ include 'check.php';
                     <tr>
                         <td>Last Name</td>
                         <td><input type='text' name='last_name' class='form-control' /></td>
+                    </tr>
+                    <tr>
+                        <td>User image</td>
+                        <td><input type="file" name="image" /></td>
                     </tr>
                     <tr>
                         <td>Gender</td>
@@ -196,7 +227,7 @@ include 'check.php';
                         <td></td>
                         <td>
                             <input type='submit' value='Save' class='btn btn-primary' />
-                            <a href='customer_read.php' class='btn btn-danger'>Back to read products</a>
+                            <a href='customer_read.php' class='btn btn-danger'>Back to read customer</a>
                         </td>
                     </tr>
                 </table>
