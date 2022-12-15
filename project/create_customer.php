@@ -55,7 +55,7 @@ include 'check.php';
                     $vaildation = false;
                 }
                 if (strlen($username) < 6) {
-                    echo "<div class='alert alert-danger'>need more then 6 .</div>";
+                    echo "<div class='alert alert-danger'>The username need more then 6 word.</div>";
                     $vaildation = false;
                 }
 
@@ -85,16 +85,16 @@ include 'check.php';
                 if (!empty($_FILES["image"]["name"])) {
                     include "image_uploaded.php";
                 } else {
-                    $customer_image = "";
+                    $image = "";
                 }
 
 
-                if ($vaildation = true) {
+                if ($vaildation == true) {
 
                     include 'config/database.php';
                     try {
                         // insert query
-                        $query = "INSERT INTO customers SET username=:username, password=:password, first_name=:first_name, last_name=:last_name ,gender=:gender, date_of_birth=:date_of_birth, registration_date_time=:registration_date_time, account_status=:account_status";
+                        $query = "INSERT INTO customers SET username=:username, password=:password, first_name=:first_name,customer_image=:customer_image, last_name=:last_name ,gender=:gender, date_of_birth=:date_of_birth, registration_date_time=:registration_date_time, account_status=:account_status";
                         // prepare query for execution
                         $stmt = $con->prepare($query);
 
@@ -108,44 +108,34 @@ include 'check.php';
                         $registration_date_time = date('Y-m-d H:i:s'); // get the current date and time
                         $stmt->bindParam(':registration_date_time', $registration_date_time);
                         $stmt->bindParam(':account_status', $account_status);
-                        $stmt->bindParam(':customer_image', $customer_image);
+                        $stmt->bindParam(':customer_image', $image);
                         // Execute the query
 
-                        if (empty($file_upload_error_messages)) {
                             // Execute the query
                             if ($stmt->execute()) {
                                 echo "<div class='alert alert-success'>Record was saved.</div>";
-
-                                if (!empty($_FILES["image"]["name"])) {
-                                    //so try to upload the file
-                                    if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                                    } else {
-                                        echo "<div class='alert alert-danger'>";
-                                        echo "<div>Unable to upload photo.</div>";
-                                        echo "<div>Update the record to upload photo.</div>";
-                                        echo "</div>";
-                                    }
-                                }
                             } else {
+                                if (file_exists($target_file)) {
+                                    unlink($target_file);
+                                } 
                                 echo "<div class='alert alert-danger'>Unable to save record.</div>";
                             }
-                        } else {
-                            echo "<div class='alert alert-danger'>";
-                            echo "<div>{$file_upload_error_messages}</div>";
-                            echo "<div>Update the record to upload photo.</div>";
-                            echo "</div>";
                         }
-                    }
-                    // show error
-                    catch (PDOException $exception) {
-                        die('ERROR: ' . $exception->getMessage());
+                        // show error
+                        catch (PDOException $exception) {
+                            die('ERROR: ' . $exception->getMessage());
+                        }
+                    } else {
+                        if (file_exists($target_file)) {
+                            unlink($target_file);
+                        } 
+                        // it means there are some errors, so show them to user
+                        echo "<div class='alert alert-danger'>";
+                        echo "<div>{$file_upload_error_messages}</div>";
+                        echo "</div>";
                     }
                 }
-            }
 
-
-
-            // include database connection
 
 
             ?>

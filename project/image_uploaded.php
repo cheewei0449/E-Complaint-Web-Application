@@ -25,32 +25,42 @@ if ($image) {
         // submitted file is an image
     } else {
         $file_upload_error_messages .= "<div>Submitted file is not an image.</div>";
-        $validated = false;
+        $validation = false;
     }
 
     // make sure certain file types are allowed
     $allowed_file_types = array("jpg", "jpeg", "png", "gif");
     if (!in_array($file_type, $allowed_file_types)) {
         $file_upload_error_messages .= "<div>Only JPG, JPEG, PNG, GIF files are allowed.</div>";
-        $validated = false;
+        $validation = false;
     }
 
     // make sure file does not exist
     if (file_exists($target_file)) {
         $file_upload_error_messages .= "<div>Image already exists. Try to change file name.</div>";
-        $validated = false;
+        $validation = false;
     }
 
     // make sure submitted file is not too large, can't be larger than 1 MB
     if ($_FILES['image']['size'] > (1024000)) {
         $file_upload_error_messages .= "<div>Image must be less than 1 MB in size.</div>";
-        $validated = false;
+        $validation = false;
     }
 
     // make sure the 'uploads' folder exists
     // if not, create it
     if (!is_dir($target_directory)) {
         mkdir($target_directory, 0777, true);
-        $validated = false;
+        $validation = false;
+    }
+    if (empty($file_upload_error_messages)) {
+        //so try to upload the file
+        // it means photo was uploaded
+        if (!move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+            echo "<div class='alert alert-danger'>";
+            echo "<div>Unable to upload photo.</div>";
+            echo "<div>Update the record to upload photo.</div>";
+            echo "</div>";
+        }
     }
 }

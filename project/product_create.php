@@ -38,7 +38,7 @@ include 'check.php';
                 $promotion_price = $_POST['promotion_price'];
                 $manufacture_date = $_POST['manufacture_date'];
                 $expired_date = $_POST['expired_date'];
-                $validated = true;
+                $validation = true;
 
 
 
@@ -46,7 +46,7 @@ include 'check.php';
 
                 if ($name == "" || $description == "" || $price == "" || $manufacture_date == "") {
                     echo "<div class='alert alert-danger'>Pls don't have empty.</div>";
-                    $validated = false;
+                    $validation = false;
                 }
 
                 if ($promotion_price == "") {
@@ -69,14 +69,14 @@ include 'check.php';
                     echo "<div class='alert alert-danger'>All Prices should be numbers only</div>";
                 } else if ($price > 1000) {
                     echo "<div class='alert alert-danger'>The price can't more than 1000</div>";
-                    $validated = false;
+                    $validation = false;
                 } else if ($price < 0) {
                     echo "<div class='alert alert-danger'>Price can't negative</div>";
-                    $validated = false;
+                    $validation = false;
                 }
                 if ($promotion_price > $price) {
                     echo "<div class='alert alert-danger'>Promotion price should be cheaper than original price</div>";
-                    $validated = false;
+                    $validation = false;
                 }
 
 
@@ -87,7 +87,7 @@ include 'check.php';
                 }
 
 
-                if ($validated) {
+                if ($validation) {
                     // include database connection
                     include 'config/database.php';
                     try {

@@ -13,26 +13,8 @@ include 'check.php';
     <script src="https://kit.fontawesome.com/3ddd77b8ec.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
-    <!-- Latest compiled and minified Bootstrap CSS →
- 
-    <!-- custom css -->
-    <style>
-        .m-r-1em {
-            margin-right: 1em;
-        }
 
-        .m-b-1em {
-            margin-bottom: 1em;
-        }
 
-        .m-l-1em {
-            margin-left: 1em;
-        }
-
-        .mt0 {
-            margin-top: 0;
-        }
-    </style>
 </head>
 
 <body>
@@ -43,14 +25,13 @@ include 'check.php';
         </div>
         <!-- PHP read record by ID will be here -->
         <?php
-        // get passed parameter value, in this case, the record ID
-        // isset() is a PHP function used to verify if a value is there or not
+
         $id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
 
         //include database connection
         include 'config/database.php';
 
-        // read current record's data
+
         try {
             // prepare select query
             $query = "SELECT ProductID, name, description, price ,image as old_image, promotion_price ,manufacture_date , expired_date  FROM products WHERE ProductID = ? LIMIT 0,1";
@@ -67,12 +48,7 @@ include 'check.php';
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             // values to fill up our form
-            $name = $row['name'];
-            $description = $row['description'];
-            $price = $row['price'];
-            $promotion_price = $row['promotion_price'];
-            $manufacture_date = $row['manufacture_date'];
-            $expired_date = $row['expired_date'];
+            extract($row);
         }
 
         // show error
@@ -93,12 +69,15 @@ include 'check.php';
             $promotion_price = $_POST['promotion_price'];
             $manufacture_date = $_POST['manufacture_date'];
             $expired_date = $_POST['expired_date'];
+            $delete_image = $_POST['delete_image'];
 
-            $validated = true;
+            $validation = true;
+
+            $file_upload_error_messages = "";
 
             if ($name == "" || $description == "" || $price == "" || $manufacture_date == "") {
                 echo "<div class='alert alert-danger'>Please make sure all fields are not empty</div>";
-                $validated = false;
+                $validation = false;
             }
 
             if ($promotion_price == "") {
@@ -107,36 +86,47 @@ include 'check.php';
 
             if ($expired_date == "") {
                 $expired_date = NULL;
-            } else if ($expired_date < $manufacture_date) {
-                echo "<div class='alert alert-danger'>Expired date should be later than manufacture date</div>";
-                $validated = false;
+            } else if ($expired_date != "") {
+                $date1 = date_create($expired_date);
+                $date2 = date_create($manufacture_date);
+                $expired_check = date_diff($date2, $date1);
+                if ($expired_check->format("%R%a") < 0) {
+                    $file_upload_error_messages .= "<div class='alert alert-danger'>The expired date can not be earlier than the manufacture date.</div>";
+                    $validation = false;
+                }
             }
 
             if (!is_numeric($price)) {
                 echo "<div class='alert alert-danger'>All Prices should be numbers only</div>";
             } else if ($price > 1000) {
                 echo "<div class='alert alert-danger'>The price can't more than 1000</div>";
-                $validated = false;
+                $validation = false;
             } else if ($price < 0) {
                 echo "<div class='alert alert-danger'>Price can't negative</div>";
-                $validated = false;
+                $validation = false;
             }
             if ($promotion_price > $price) {
                 echo "<div class='alert alert-danger'>Promotion price should be cheaper than original price</div>";
-                $validated = false;
+                $validation = false;
             }
 
-            if (empty($_FILES["image"]["name"])) {
+            if ((!empty($_FILES["image"]["name"]) && $delete_image == "Yes")) {
+                $file_upload_error_messages .= "<div class='alert alert-danger'>Cannot upload image if want to delete image.</div>";
+                $validation = false;
+            } else if ($delete_image == "Yes") {
+                unlink("uploads/$old_image");
+                $new_image = "";
+            } else if (empty($_FILES["image"]["name"])) {
                 $new_image = $old_image;
             } else {
-                if ($old_image != "") {
+                include "image_uploaded.php";
+                if ($validation == true && $old_image != "" && getimagesize($target_file) !== false) {
                     unlink("uploads/$old_image");
                 }
-                include "image_uploaded.php";
                 $new_image = $image;
             }
 
-            if ($validated) {
+            if ($validation) {
                 try {
                     // write update query
                     // in this case, it seemed like we have so many fields to pass and
@@ -153,45 +143,30 @@ include 'check.php';
                     $stmt->bindParam(':image', $new_image);
                     $stmt->bindParam(':manufacture_date', $manufacture_date);
                     $stmt->bindParam(':expired_date', $expired_date);
-                    $stmt->bindParam(':image', $image);
+
 
 
                     // Execute the query
-                    if (empty($file_upload_error_messages)) {
-
-                        if ($stmt->execute()) {
-                            if (!empty($_FILES["image"]["name"])) {
-                                //so try to upload the file
-                                if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                                    // it means photo was uploaded
-                                    header("Location: product_read.php?message=update_success");
-                                    ob_end_flush();
-                                } else {
-                                    echo "<div class='alert alert-danger'>";
-                                    echo "<div>Unable to upload photo.</div>";
-                                    echo "<div>Update the record to upload photo.</div>";
-                                    echo "</div>";
-                                }
-                            } else {
-                                header("Location: product_read.php?message=update_success");
-                                ob_end_flush();
-                            }
-                        } else {
-                            echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
+                    if ($stmt->execute()) {
+                        header("Location: product_read.php?message=update_success");
+                        ob_end_flush();
+                    } else {
+                        if (file_exists($target_file)) {
+                            unlink($target_file);
                         }
-                    } // if $file_upload_error_messages is NOT empty
-                    else {
-                        // it means there are some errors, so show them to user
-                        echo "<div class='alert alert-danger'>";
-                        echo "<div>{$file_upload_error_messages}</div>";
-                        echo "<div>Update the record to upload photo.</div>";
-                        echo "</div>";
+                        echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
                     }
                 }
+
                 // show errors
                 catch (PDOException $exception) {
                     die('ERROR: ' . $exception->getMessage());
                 }
+            } else {
+                // it means there are some errors, so show them to user
+                echo "<div class='alert alert-danger'>";
+                echo "<div>{$file_upload_error_messages}</div>";
+                echo "</div>";
             }
         } ?>
 
@@ -215,6 +190,20 @@ include 'check.php';
                     <td>Promotion_price</td>
                     <td><input type='number' name='promotion_price' value="<?php echo $promotion_price;  ?>" class='form-control' /></td>
                 </tr>
+                <input type='hidden' name='delete_image' value='No'>
+                        <?php if ($old_image != "") {
+                            echo "<tr>";
+                            echo "<td colspan='2' class='text-center'><img src='uploads/$old_image'alt='Image not found' width='250px'>";
+                            echo "<div class='form-check form-switch mt-2 d-flex justify-content-center'>";
+                            echo "<input cl='form-check-iassnput me-3' type='checkbox' role='switch' name='delete_image' value='Yes' id='delete_image'>";
+                            echo "<label class='form-check-label fw-bold' for='delete_image'>";
+                            echo  "Delete Image";
+                            echo "</td>";
+                            echo "</label>";
+                            echo "</div>";
+                            echo "</tr>";
+                        }
+                        ?>
                 <tr>
                     <td>Photo</td>
                     <td><input type="file" name="image" /></td>
