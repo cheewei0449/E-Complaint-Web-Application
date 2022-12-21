@@ -91,7 +91,7 @@ include 'check.php';
         }
         ?>
 
-        <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
+        <form id="myForm" action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
             <div class="row">
                 <?php include 'config/database.php'; ?>
                 <div class="col-10 col-sm-6 m-auto">
@@ -126,7 +126,7 @@ include 'check.php';
                 <?php
                 $query = "SELECT * FROM products ORDER BY ProductID ASC";
                 ?>
-                <table class='table table-hover table-responsive table-bordered'>
+                <table class='table table-hover table-responsive table-bordered' id='order'>
                     <tr>
                         <th>#</th>
                         <th>Products</th>
@@ -158,14 +158,14 @@ include 'check.php';
                     echo    "</select>";
                     echo    "</td>";
                     echo    "<td>";
-                    echo    "<input type='number' name='quantity[]' value=\"0\" class='form-control' min=\"0\" />";
+                    echo    "<input type='number' name='quantity[]' value=\"1\" class='form-control' min=\"1\" />";
                     echo    "</td>";
                     echo    "</tr>";
                     ?>
 
                 </table>
                 <div class="d-flex justify-content-between">
-                    <input type='submit' value='Save' class='btn btn-primary mt-3 col-3 col-md' />
+                    <input type='button' value='Save' class='btn btn-primary mt-3 col-3 col-md' onclick= "checkDuplicate()" />
                     <input type="button" value="Add More Product" class="btn btn-info mt-3 col-3 col-md add_one" />
                     <input type="button" value="Delete" class="btn btn-danger mt-3 col-3 col-md delete_one" />
                 </div>
@@ -218,6 +218,21 @@ include 'check.php';
 
             }
         }, false);
+
+        function checkDuplicate() {
+            var newarray = [];
+            const table = document.querySelector('#order');
+            var select = table.getElementsByTagName('select');
+            for (var i = 0; i < select.length; i++) {
+                newarray.push(select[i].value);
+            }
+            var set = new Set(newarray);
+            if (set.size !== newarray.length) {
+                alert("There are duplicate items in the array");
+            } else {
+                document.getElementById("myForm").submit();
+            }
+        }
     </script>
 </body>
 

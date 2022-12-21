@@ -56,7 +56,7 @@ include 'check.php';
 
 
         // select all data
-        $query = "SELECT CustomerID , username, first_name, last_name, gender, date_of_birth, account_status FROM customers ORDER BY CustomerID  DESC";
+        $query = "SELECT CustomerID , username, first_name, last_name,customer_image, gender, date_of_birth, account_status FROM customers ORDER BY CustomerID  DESC";
         $stmt = $con->prepare($query);
         $stmt->execute();
 
@@ -77,6 +77,7 @@ include 'check.php';
             echo "<tr>";
             echo "<th>ID</th>";
             echo "<th>Username</th>";
+            echo "<th>Image</th>";
             echo "<th>First name</th>";
             echo "<th>Last name</th>";
             echo "<th>Gender</th>";
@@ -95,6 +96,12 @@ include 'check.php';
                 echo "<tr>";
                 echo "<td>{$CustomerID}</td>";
                 echo "<td>{$username}</td>";
+                if ($customer_image !== "") {
+                    echo "<td><div class='text-center'><img src='uploads/$customer_image' width='50px'/></div></td>";
+                } else {
+                    echo "<td class='text-center'><img src='images/user.png'  width='50px'></td>";
+
+                }
                 echo "<td>{$first_name}</td>";
                 echo "<td>{$last_name}</td>";
                 echo "<td>{$gender}</td>";

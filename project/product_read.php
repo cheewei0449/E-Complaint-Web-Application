@@ -56,7 +56,7 @@ include 'check.php';
 
 
         // select all data
-        $query = "SELECT ProductID, name, description, price FROM products ORDER BY ProductID DESC";
+        $query = "SELECT ProductID, name, description,image, price FROM products ORDER BY ProductID DESC";
         $stmt = $con->prepare($query);
         $stmt->execute();
 
@@ -76,9 +76,9 @@ include 'check.php';
             echo "<tr>";
             echo "<th>ID</th>";
             echo "<th>Name</th>";
+            echo "<th>Image</th>";
             echo "<th>Description</th>";
             echo "<th>Price</th>";
-            echo "<th>Action</th>";
             echo "</tr>";
 
             // table body will be here
@@ -91,8 +91,9 @@ include 'check.php';
                 echo "<tr>";
                 echo "<td>{$ProductID}</td>";
                 echo "<td>{$name}</td>";
+                echo "<td><div class='text-center'><img src='uploads/$image' width='50px'/></div></td>";
                 echo "<td>{$description}</td>";
-                echo "<td>{$price}</td>";
+                echo "<td class='text-end'>".number_format(round($price,1),2)."</td>";
                 echo "<td>";
                 // read one record
                 echo "<a href='product_read_one.php?id={$ProductID}' class='btn btn-info m-r-1em'>Read</a>";
