@@ -191,19 +191,19 @@ include 'check.php';
                     <td><input type='number' name='promotion_price' value="<?php echo $promotion_price;  ?>" class='form-control' /></td>
                 </tr>
                 <input type='hidden' name='delete_image' value='No'>
-                        <?php if ($old_image != "") {
-                            echo "<tr>";
-                            echo "<td colspan='2' class='text-center'><img src='uploads/$old_image'alt='Image not found' width='250px'>";
-                            echo "<div class='form-check form-switch mt-2 d-flex justify-content-center'>";
-                            echo "<input cl='form-check-iassnput me-3' type='checkbox' role='switch' name='delete_image' value='Yes' id='delete_image'>";
-                            echo "<label class='form-check-label fw-bold' for='delete_image'>";
-                            echo  "Delete Image";
-                            echo "</td>";
-                            echo "</label>";
-                            echo "</div>";
-                            echo "</tr>";
-                        }
-                        ?>
+                <?php if ($old_image != "") {
+                    echo "<tr>";
+                    echo "<td colspan='2' class='text-center'><img src='uploads/$old_image'alt='Image not found' width='250px'>";
+                    echo "<div class='form-check form-switch mt-2 d-flex justify-content-center'>";
+                    echo "<input cl='form-check-iassnput me-3' type='checkbox' role='switch' name='delete_image' value='Yes' id='delete_image'>";
+                    echo "<label class='form-check-label fw-bold' for='delete_image'>";
+                    echo  "Delete Image";
+                    echo "</td>";
+                    echo "</label>";
+                    echo "</div>";
+                    echo "</tr>";
+                }
+                ?>
                 <tr>
                     <td>Photo</td>
                     <td><input type="file" name="image" /></td>

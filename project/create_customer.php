@@ -111,30 +111,30 @@ include 'check.php';
                         $stmt->bindParam(':customer_image', $image);
                         // Execute the query
 
-                            // Execute the query
-                            if ($stmt->execute()) {
-                                echo "<div class='alert alert-success'>Record was saved.</div>";
-                            } else {
-                                if (file_exists($target_file)) {
-                                    unlink($target_file);
-                                } 
-                                echo "<div class='alert alert-danger'>Unable to save record.</div>";
+                        // Execute the query
+                        if ($stmt->execute()) {
+                            echo "<div class='alert alert-success'>Record was saved.</div>";
+                        } else {
+                            if (file_exists($target_file)) {
+                                unlink($target_file);
                             }
+                            echo "<div class='alert alert-danger'>Unable to save record.</div>";
                         }
-                        // show error
-                        catch (PDOException $exception) {
-                            die('ERROR: ' . $exception->getMessage());
-                        }
-                    } else {
-                        if (file_exists($target_file)) {
-                            unlink($target_file);
-                        } 
-                        // it means there are some errors, so show them to user
-                        echo "<div class='alert alert-danger'>";
-                        echo "<div>{$file_upload_error_messages}</div>";
-                        echo "</div>";
                     }
+                    // show error
+                    catch (PDOException $exception) {
+                        die('ERROR: ' . $exception->getMessage());
+                    }
+                } else {
+                    if (file_exists($target_file)) {
+                        unlink($target_file);
+                    }
+                    // it means there are some errors, so show them to user
+                    echo "<div class='alert alert-danger'>";
+                    echo "<div>{$file_upload_error_messages}</div>";
+                    echo "</div>";
                 }
+            }
 
 
 

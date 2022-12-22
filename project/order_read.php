@@ -34,10 +34,9 @@ include "header_navbar.php";
 
         if ($message == "update_success") {
             echo "<div class='alert alert-success'>Record was updated.</div>";
-        } 
-        else if ($message == 'deleted') {
+        } else if ($message == 'deleted') {
             echo "<div class='alert alert-success'>Record was deleted.</div>";
-        }else {
+        } else {
             echo "<div class='alert alert-danger align-item-center'>Unknown error happened</div>";
         }
     }

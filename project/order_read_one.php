@@ -79,53 +79,53 @@ include 'check.php';
 
 
     <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
-    <div class="row">
-                <?php include 'config/database.php'; ?>
-                <div class="col-10 col-sm-6 m-auto">
- 
-                        <?php
-                    try {
-                        $query = "SELECT CustomerID, username FROM customers ORDER BY CustomerID ASC";
-                        // select all data
-                        $query = "SELECT OrderID, ProductID, quantity FROM order_detail WHERE OrderID= :OrderID ";
-                        $stmt = $con->prepare($query);
-                        $query_customer = "SELECT username, OrderID FROM customers LEFT JOIN order_summary ON customers.CustomerID = order_summary.CustomerID WHERE OrderID=:OrderID ";
-                        $stmt_customer = $con->prepare($query_customer);
-                        $stmt->bindParam(":OrderID", $OrderID);
-                        $stmt_customer->bindParam(":OrderID", $OrderID);
-                        $stmt->execute();
-                        $stmt_customer->execute();
+        <div class="row">
+            <?php include 'config/database.php'; ?>
+            <div class="col-10 col-sm-6 m-auto">
 
-                        // this is how to get number of rows returned
-                        $num = $stmt->rowCount();
+                <?php
+                try {
+                    $query = "SELECT CustomerID, username FROM customers ORDER BY CustomerID ASC";
+                    // select all data
+                    $query = "SELECT OrderID, ProductID, quantity FROM order_detail WHERE OrderID= :OrderID ";
+                    $stmt = $con->prepare($query);
+                    $query_customer = "SELECT username, OrderID FROM customers LEFT JOIN order_summary ON customers.CustomerID = order_summary.CustomerID WHERE OrderID=:OrderID ";
+                    $stmt_customer = $con->prepare($query_customer);
+                    $stmt->bindParam(":OrderID", $OrderID);
+                    $stmt_customer->bindParam(":OrderID", $OrderID);
+                    $stmt->execute();
+                    $stmt_customer->execute();
 
-                        //check if more than 0 record found
-                        if ($num > 0) {
-                            // store retrieved row to a variable
-                            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    // this is how to get number of rows returned
+                    $num = $stmt->rowCount();
 
-                            extract($row);
-                        } else {
-                            die('ERROR: Record ID not found.');
-                        }
+                    //check if more than 0 record found
+                    if ($num > 0) {
+                        // store retrieved row to a variable
+                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                        $num_customer = $stmt_customer->rowCount();
-
-                        if ($num_customer > 0) {
-                            // store retrieved row to a variable
-                            $row_customer = $stmt_customer->fetch(PDO::FETCH_ASSOC);
-
-                            extract($row_customer);
-                        } else {
-                            die('ERROR: Record ID not found.');
-                        }
+                        extract($row);
+                    } else {
+                        die('ERROR: Record ID not found.');
                     }
 
-                    // show error
-                    catch (PDOException $exception) {
-                        die('ERROR: ' . $exception->getMessage());
+                    $num_customer = $stmt_customer->rowCount();
+
+                    if ($num_customer > 0) {
+                        // store retrieved row to a variable
+                        $row_customer = $stmt_customer->fetch(PDO::FETCH_ASSOC);
+
+                        extract($row_customer);
+                    } else {
+                        die('ERROR: Record ID not found.');
                     }
-                    ?>
+                }
+
+                // show error
+                catch (PDOException $exception) {
+                    die('ERROR: ' . $exception->getMessage());
+                }
+                ?>
                 </select>
                 <!--we have our html table here where the record will be displayed-->
                 <div class="table-responsive">
@@ -183,8 +183,8 @@ include 'check.php';
                                     echo "<tr>";
                                     echo "<td>$no. {$row_product['name']}</td>";
                                     echo "<td>{$row['quantity']}</td>";
-                                    echo "<td class = 'text-end'>".number_format(round($row_product['price'],1),2)."</td>";
-                                    echo "<td class = 'text-end'>".number_format(round($total_unit_price,1),2)."</td>";
+                                    echo "<td class = 'text-end'>" . number_format(round($row_product['price'], 1), 2) . "</td>";
+                                    echo "<td class = 'text-end'>" . number_format(round($total_unit_price, 1), 2) . "</td>";
                                     echo "</tr>";
 
                                     $no++;
@@ -200,7 +200,7 @@ include 'check.php';
                                 <th colspan="3" class="text-end">
                                     <p class="me-3 my-2 fs-5">Total</p>
                                 </th>
-                                <td><?php echo "<p class=' my-2 fs-5 text-end'>".number_format(round($total_amount,1),2)." </p>" ?></td>
+                                <td><?php echo "<p class=' my-2 fs-5 text-end'>" . number_format(round($total_amount, 1), 2) . " </p>" ?></td>
                             </tr>
                         </tbody>
                     </table>

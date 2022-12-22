@@ -100,7 +100,6 @@ include 'check.php';
                     echo "<td><div class='text-center'><img src='uploads/$customer_image' width='50px'/></div></td>";
                 } else {
                     echo "<td class='text-center'><img src='images/user.png'  width='50px'></td>";
-
                 }
                 echo "<td>{$first_name}</td>";
                 echo "<td>{$last_name}</td>";

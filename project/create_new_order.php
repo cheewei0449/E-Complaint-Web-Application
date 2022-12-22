@@ -30,62 +30,83 @@ include 'check.php';
         <?php
         if ($_POST) {
             $CustomerID = $_POST['CustomerID'];
+            $ProductID = $_POST['ProductID'];
 
-            // include database connection
-            include 'config/database.php';
+            $validation = true;
+            $error = 0;
 
-            try {
-                $query_order_summary = "INSERT INTO order_summary SET CustomerID=:CustomerID";
-
-                // prepare query for execution
-                $stmt_order_summary = $con->prepare($query_order_summary);
-
-                $stmt_order_summary->bindParam(':CustomerID', $CustomerID);
-
-                if ($stmt_order_summary->execute()) {
-                    echo "<div class='alert alert-success'>Record was saved.</div>";
-
-                    // prepare select query
-                    $query = "SELECT OrderID FROM order_summary ORDER BY OrderID DESC LIMIT 1";
-                    $stmt = $con->prepare($query);
-
-                    // execute our query
-                    $stmt->execute();
-
-                    $num = $stmt->rowCount();
-
-                    if ($num > 0) {
-                        // store retrieved row to a variable
-                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                        extract($row);
-                    } else {
-                        die('ERROR: Record ID not found.');
-                    }
-                } else {
-                    echo "<div class='alert alert-danger'>Unable to save record.</div>";
-                }
-            } catch (PDOException $exception) {
-                die('ERROR: ' . $exception->getMessage());
+            if ($CustomerID == 0) {
+                echo "<div class='alert alert-danger'>Pls check that you have not selected a customer</div>";
+                $validation = false;
             }
 
-            for ($count = 0; $count < count($_POST['ProductID']); $count++) {
+            for ($count = 0; $count < count($ProductID); $count++) {
+                if ($ProductID[$count] == 0) {
+                    $error++;
+                }
+            }
+
+            if ($error > 0) {
+                echo "<div class='alert alert-danger'>The product can't be empty</div>";
+                $validation = false;
+            }
+
+            if ($validation) {
                 try {
-                    $query_order_detail = "INSERT INTO order_detail SET OrderID=:OrderID, ProductID=:ProductID, quantity=:quantity";
+                    include 'config/database.php';
+
+                    $query_order_summary = "INSERT INTO order_summary SET CustomerID=:CustomerID";
+
                     // prepare query for execution
-                    $stmt_order_detail = $con->prepare($query_order_detail);
+                    $stmt_order_summary = $con->prepare($query_order_summary);
 
-                    $stmt_order_detail->bindParam(':OrderID', $OrderID);
-                    $stmt_order_detail->bindParam(':ProductID', $_POST['ProductID'][$count]);
-                    $stmt_order_detail->bindParam(':quantity', $_POST['quantity'][$count]);
+                    $stmt_order_summary->bindParam(':CustomerID', $CustomerID);
 
-                    $record_number = $count + 1;
-                    if ($stmt_order_detail->execute()) {
-                        echo "<div class='alert alert-success'>Record $record_number was saved.</div>";
+                    if ($stmt_order_summary->execute()) {
+                        echo "<div class='alert alert-success'>Record was saved.</div>";
+
+                        // prepare select query
+                        $query = "SELECT OrderID FROM order_summary ORDER BY OrderID DESC LIMIT 1";
+                        $stmt = $con->prepare($query);
+
+                        // execute our query
+                        $stmt->execute();
+
+                        $num = $stmt->rowCount();
+
+                        if ($num > 0) {
+                            // store retrieved row to a variable
+                            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                            extract($row);
+                        } else {
+                            die('ERROR: Record ID not found.');
+                        }
                     } else {
                         echo "<div class='alert alert-danger'>Unable to save record.</div>";
                     }
                 } catch (PDOException $exception) {
                     die('ERROR: ' . $exception->getMessage());
+                }
+
+                for ($count = 0; $count < count($_POST['ProductID']); $count++) {
+                    try {
+                        $query_order_detail = "INSERT INTO order_detail SET OrderID=:OrderID, ProductID=:ProductID, quantity=:quantity";
+                        // prepare query for execution
+                        $stmt_order_detail = $con->prepare($query_order_detail);
+
+                        $stmt_order_detail->bindParam(':OrderID', $OrderID);
+                        $stmt_order_detail->bindParam(':ProductID', $_POST['ProductID'][$count]);
+                        $stmt_order_detail->bindParam(':quantity', $_POST['quantity'][$count]);
+
+                        $record_number = $count + 1;
+                        if ($stmt_order_detail->execute()) {
+                            echo "<div class='alert alert-success'>Record $record_number was saved.</div>";
+                        } else {
+                            echo "<div class='alert alert-danger'>Unable to save record.</div>";
+                        }
+                    } catch (PDOException $exception) {
+                        die('ERROR: ' . $exception->getMessage());
+                    }
                 }
             }
         }
@@ -165,7 +186,7 @@ include 'check.php';
 
                 </table>
                 <div class="d-flex justify-content-between">
-                    <input type='button' value='Save' class='btn btn-primary mt-3 col-3 col-md' onclick= "checkDuplicate()" />
+                    <input type='button' value='Save' class='btn btn-primary mt-3 col-3 col-md' onclick="checkDuplicate()" />
                     <input type="button" value="Add More Product" class="btn btn-info mt-3 col-3 col-md add_one" />
                     <input type="button" value="Delete" class="btn btn-danger mt-3 col-3 col-md delete_one" />
                 </div>

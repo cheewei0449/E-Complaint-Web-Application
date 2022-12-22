@@ -93,7 +93,7 @@ include 'check.php';
                 echo "<td>{$name}</td>";
                 echo "<td><div class='text-center'><img src='uploads/$image' width='50px'/></div></td>";
                 echo "<td>{$description}</td>";
-                echo "<td class='text-end'>".number_format(round($price,1),2)."</td>";
+                echo "<td class='text-end'>" . number_format(round($price, 1), 2) . "</td>";
                 echo "<td>";
                 // read one record
                 echo "<a href='product_read_one.php?id={$ProductID}' class='btn btn-info m-r-1em'>Read</a>";
