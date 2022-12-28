@@ -240,7 +240,7 @@ include 'check.php';
                 <div class="d-flex justify-content-between">
                     <input type='button' value='Save' class='btn btn-primary mt-3 col-3 col-md' onclick="checkDuplicate()" />
                     <input type="button" value="Add More Product" class="btn btn-info mt-3 col-3 col-md add_one" />
-                    
+
                 </div>
             </div>
         </form>
@@ -257,19 +257,19 @@ include 'check.php';
 </footer>
 
 <script>
-    function drop_item(){
-        document.querySelector('#order').onclick = function(ev){
-            if (ev.target.innerHTML == "Delete"){
-                
-                var table= document.querySelectorAll('.pRow');
+    function drop_item() {
+        document.querySelector('#order').onclick = function(ev) {
+            if (ev.target.innerHTML == "Delete") {
+
+                var table = document.querySelectorAll('.pRow');
                 var rowCount = table.length;
 
-                if(rowCout >1)
+                if (rowCout > 1)
 
-                var table_row = ev.target.parentElement;
+                    var table_row = ev.target.parentElement;
                 table_row.remove(table_row);
-            } else{
-                alert ("You must remained at least one row in the table.")
+            } else {
+                alert("You must remained at least one row in the table.")
             }
         }
     }

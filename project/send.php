@@ -6,16 +6,16 @@ require 'phpmailer/src/Exception.php';
 require 'phpmailer/src/PHPMailer.php';
 require 'phpmailer/src/SMTP.php';
 
-if(isset($_POST["send"]) && $_POST["txtName"] != "" && $_POST["txtEmail"] != "" && $_POST["txtPhone"]  != "" && $_POST["txtMsg"] != ""){
+if(isset($_POST["btnSubmit"]) && $_POST["txtName"] != "" && $_POST["txtEmail"] != "" && $_POST["txtPhone"]  != "" && $_POST["txtMsg"] != ""){
     $mail = new PHPMailer(true);
 
-    $mail -> isSMTP();
-    $mail->Host = 'smtp.gamil.com';
-    $mail->SMTPAuth = true;
-    $mail->Username = 'userc913@gmail.com';
-    $mail->Password = 'yimppyypjfoikydf';
-    $mail->SMTPSecure = 'ssl';
-    $mail->Port = 465;
+    $mail-> isSMTP();
+    $mail-> Host = 'smtp.gmail.com';
+    $mail-> SMTPAuth = true;
+    $mail-> Username = 'userc913@gmail.com';
+    $mail-> Password = 'yimppyypjfoikydf';
+    $mail-> SMTPSecure = "ssl";
+    $mail-> Port = 465;
 
     $contact = 
     "<html>
@@ -32,7 +32,7 @@ if(isset($_POST["send"]) && $_POST["txtName"] != "" && $_POST["txtEmail"] != "" 
     $mail->setFrom('userc913@gmail.com');
     $mail->addAddress("userc913@gmail.com");
     $mail->isHTML(true);
-    $mail->Subject = $_POST["email"];
+    $mail->Subject = $_POST["txtEmail"];
     $mail->Body = $contact;
 
     $mail->send();
@@ -40,5 +40,5 @@ if(isset($_POST["send"]) && $_POST["txtName"] != "" && $_POST["txtEmail"] != "" 
     header("Location: contact.php?message=mail_success");
 } else {
     header("Location: contact.php?message=mail_empty");
+
 }
-?>

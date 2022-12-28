@@ -2,7 +2,7 @@
 session_start();
 
 // remove all session variables
-session_unset(); 
+session_unset();
 
 // destroy the session 
 session_destroy();
