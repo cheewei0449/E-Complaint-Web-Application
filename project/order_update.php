@@ -18,6 +18,9 @@ include 'check.php';
 </head>
 
 <body>
+    <?php
+    include "header_navbar.php";
+    ?>
     <!-- container -->
     <div class="container">
         <div class="page-header">
@@ -38,7 +41,7 @@ include 'check.php';
                 $stmt_order_summary = $con->prepare($query_order_summary);
                 $stmt_order_summary->bindParam(':CustomerID', $CustomerID);
                 if ($stmt_order_summary->execute()) {
-                    echo "<div class='alert alert-success'>Record was saved.</div>";
+
                     // prepare select query
                     $query2 = "SELECT OrderID FROM order_summary ORDER BY OrderID DESC LIMIT 1";
                     $stmt2 = $con->prepare($query2);
@@ -61,6 +64,8 @@ include 'check.php';
                 die('ERROR: ' . $exception->getMessage());
             }
 
+            $record_save = 0;
+
             for ($count = 0; $count < count($_POST['ProductID']); $count++) {
                 try {
                     $query_order_detail = "INSERT INTO order_detail SET OrderID=:OrderID, ProductID=:ProductID, quantity=:quantity";
@@ -71,11 +76,15 @@ include 'check.php';
                     $stmt_order_detail->bindParam(':ProductID', $_POST['ProductID'][$count]);
                     $stmt_order_detail->bindParam(':quantity', $_POST['quantity'][$count]);
 
+
                     $record_number = $count + 1;
                     if ($stmt_order_detail->execute()) {
-                        echo "<div class='alert alert-success'>Record $record_number was saved.</div>";
+                        $record_save++;
                     } else {
                         echo "<div class='alert alert-danger'>Unable to save record.</div>";
+                    }
+                    if ($record_save == count(($_POST['ProductID']))) {
+                        echo "<div class='alert alert-success'>Record was saved.</div>";
                     }
                 } catch (PDOException $exception) {
                     die('ERROR: ' . $exception->getMessage());
@@ -119,7 +128,7 @@ include 'check.php';
         }
 
         ?>
-        <form action="<?php echo $_SERVER["PHP_SELF"] . "?id={$id}"; ?>" method="POST">
+        <form id="myForm" action="<?php echo $_SERVER["PHP_SELF"] . "?id={$id}"; ?>" method="POST">
             <div class="table-responsive">
                 <table class='table table-hover table-bordered '>
                     <thead>
@@ -168,11 +177,12 @@ include 'check.php';
                         $query = "SELECT * FROM products ORDER BY ProductID ASC  ";
                         ?>
 
-                        <table class='table table-hover table-responsive table-bordered'>
+                        <table class='table table-hover table-responsive table-bordered' id='order'>
                             <tr>
                                 <th>#</th>
                                 <th>Products</th>
                                 <th>Quantity</th>
+                                <th></th>
                             </tr>
 
                             <?php
@@ -211,6 +221,9 @@ include 'check.php';
                                     echo    "<td>";
                                     echo    "<input type='number' name='quantity[]' value=\"$row1[quantity]\" class='form-control' min=\"1\" />";
                                     echo    "</td>";
+                                    echo    "<td>";
+                                    echo    "<input type='button' value=\"Delete\" class='btn btn-danger  'delete_one' onclick=\"drop_item()\" />";
+                                    echo    "</td>";
                                     echo    "</tr>";
                                 } while ($row1 = $stmt_id->fetch(PDO::FETCH_ASSOC));
                             }
@@ -225,9 +238,9 @@ include 'check.php';
                     </thead>
                 </table>
                 <div class="d-flex justify-content-between">
-                    <input type='submit' value='Save' class='btn btn-primary mt-3 col-3 col-md' />
+                    <input type='button' value='Save' class='btn btn-primary mt-3 col-3 col-md' onclick="checkDuplicate()" />
                     <input type="button" value="Add More Product" class="btn btn-info mt-3 col-3 col-md add_one" />
-                    <input type="button" value="Delete" class="btn btn-danger mt-3 col-3 col-md delete_one" />
+                    
                 </div>
             </div>
         </form>
@@ -244,18 +257,27 @@ include 'check.php';
 </footer>
 
 <script>
+    function drop_item(){
+        document.querySelector('#order').onclick = function(ev){
+            if (ev.target.innerHTML == "Delete"){
+                
+                var table= document.querySelectorAll('.pRow');
+                var rowCount = table.length;
+
+                if(rowCout >1)
+
+                var table_row = ev.target.parentElement;
+                table_row.remove(table_row);
+            } else{
+                alert ("You must remained at least one row in the table.")
+            }
+        }
+    }
     document.addEventListener('click', function(event) {
         if (event.target.matches('.add_one')) {
             var element = document.querySelector('.pRow');
             var clone = element.cloneNode(true);
             element.after(clone);
-        }
-        if (event.target.matches('.delete_one')) {
-            var total = document.querySelectorAll('.pRow').length;
-            if (total > 1) {
-                var element = document.querySelector('.pRow');
-                element.remove(element);
-            }
         }
         var total = document.querySelectorAll('.pRow').length;
 
@@ -265,6 +287,21 @@ include 'check.php';
 
         }
     }, false);
+
+    function checkDuplicate() {
+        var newarray = [];
+        const table = document.querySelector('#order');
+        var select = table.getElementsByTagName('select');
+        for (var i = 0; i < select.length; i++) {
+            newarray.push(select[i].value);
+        }
+        var set = new Set(newarray);
+        if (set.size !== newarray.length) {
+            alert("The item can't repeat!");
+        } else {
+            document.getElementById("myForm").submit();
+        }
+    }
 </script>
 
 </html>

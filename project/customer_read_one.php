@@ -5,17 +5,22 @@ include 'check.php';
 ?>
 
 <head>
-    <title>PDO - Read One Record - PHP CRUD Tutorial</title>
+    <title>PDO - Read Records - PHP CRUD Tutorial</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/3ddd77b8ec.js" crossorigin="anonymous"></script>
-    <!-- Latest compiled and minified Bootstrap CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+
 
 </head>
 
 <body>
+    <?php
+    include "header_navbar.php";
+    ?>
 
     <!-- container -->
     <div class="container">
@@ -96,7 +101,11 @@ include 'check.php';
             </tr>
             <tr>
                 <td>User Image</td>
-                <td class="text-center"><img src="uploads/<?php echo htmlspecialchars($customer_image, ENT_QUOTES); ?>" alt="Image not found" width="250px"></td>
+                <?php if ($customer_image !== "") {
+                    echo "<td><div class='text-center'><img src='uploads/$customer_image' width='50px'/></div></td>";
+                } else {
+                    echo "<td class='text-center'><img src='images/user.png'  width='50px'></td>";
+                } ?>
             </tr>
             <tr>
                 <td>Gender</td>

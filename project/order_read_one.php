@@ -19,6 +19,9 @@ include 'check.php';
 </head>
 
 <body>
+    <?php
+    include "header_navbar.php";
+    ?>
 
     <!-- Content -->
     <div class="page-header">

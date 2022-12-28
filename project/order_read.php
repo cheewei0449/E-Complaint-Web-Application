@@ -87,6 +87,7 @@ include "header_navbar.php";
         echo "<th>Last Name</th>";
         echo "<th class = 'text-end'>Total (RM)</th>";
         echo "<th>Order Date</th>";
+        echo "<th></th>";
         echo "</tr>";
 
         // table body will be here
@@ -104,13 +105,13 @@ include "header_navbar.php";
             echo "<td>{$order_date}</td>";
             echo "<td>";
             // read one record
-            echo "<a href='order_read_one.php?id={$OrderID}' class='btn btn-info m-r-1em'>Read</a>";
+            echo "<a href='order_read_one.php?id={$OrderID}' class='btn btn-info ms-2  m-r-1em'>Read</a>";
 
             // we will use this links on next part of this post
-            echo "<a href='order_update.php?id={$OrderID}' class='btn btn-primary m-r-1em'>Edit</a>";
+            echo "<a href='order_update.php?id={$OrderID}' class='btn btn-primary ms-2  m-r-1em'>Edit</a>";
 
             // we will use this links on next part of this post
-            echo "<a href='#' onclick='delete_user({$OrderID});'  class='btn btn-danger'>Delete</a>";
+            echo "<a href='#' onclick='delete_user({$OrderID});'  class='btn btn-danger ms-2 '>Delete</a>";
             echo "</td>";
             echo "</tr>";
         }

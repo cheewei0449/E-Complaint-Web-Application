@@ -56,7 +56,7 @@ include 'check.php';
 
 
         // select all data
-        $query = "SELECT ProductID, name, description,image, price FROM products ORDER BY ProductID DESC";
+        $query = "SELECT ProductID, name, description,image, price FROM products ORDER BY ProductID ASC";
         $stmt = $con->prepare($query);
         $stmt->execute();
 
@@ -79,6 +79,7 @@ include 'check.php';
             echo "<th>Image</th>";
             echo "<th>Description</th>";
             echo "<th>Price</th>";
+            echo "<th></th>";
             echo "</tr>";
 
             // table body will be here
@@ -96,13 +97,13 @@ include 'check.php';
                 echo "<td class='text-end'>" . number_format(round($price, 1), 2) . "</td>";
                 echo "<td>";
                 // read one record
-                echo "<a href='product_read_one.php?id={$ProductID}' class='btn btn-info m-r-1em'>Read</a>";
+                echo "<a href='product_read_one.php?id={$ProductID}' class='btn btn-info ms-2  m-r-1em'>Read</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='product_update.php?id={$ProductID}' class='btn btn-primary m-r-1em'>Edit</a>";
+                echo "<a href='product_update.php?id={$ProductID}' class='btn btn-primary ms-2  m-r-1em'>Edit</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_user({$ProductID});'  class='btn btn-danger'>Delete</a>";
+                echo "<a href='#' onclick='delete_user({$ProductID});'  class='btn btn-danger ms-2 '>Delete</a>";
                 echo "</td>";
                 echo "</tr>";
             }

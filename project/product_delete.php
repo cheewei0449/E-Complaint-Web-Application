@@ -1,4 +1,7 @@
 <?php
+    include "header_navbar.php";
+    ?>
+<?php
 // include database connection
 include 'config/database.php';
 

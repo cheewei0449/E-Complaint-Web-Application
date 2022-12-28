@@ -56,7 +56,7 @@ include 'check.php';
 
 
         // select all data
-        $query = "SELECT CustomerID , username, first_name, last_name,customer_image, gender, date_of_birth, account_status FROM customers ORDER BY CustomerID  DESC";
+        $query = "SELECT CustomerID , username, first_name, last_name,customer_image, gender, date_of_birth, account_status FROM customers ORDER BY CustomerID  ASC";
         $stmt = $con->prepare($query);
         $stmt->execute();
 
@@ -83,6 +83,7 @@ include 'check.php';
             echo "<th>Gender</th>";
             echo "<th>Date of birth</th>";
             echo "<th>Account status</th>";
+            echo "<th></th>";
             echo "</tr>";
 
 
@@ -108,13 +109,13 @@ include 'check.php';
                 echo "<td>{$account_status}</td>";
                 echo "<td>";
                 // read one record
-                echo "<a href='customer_read_one.php?id={$CustomerID}' class='btn btn-info m-r-1em'>Read</a>";
+                echo "<a href='customer_read_one.php?id={$CustomerID}' class='btn btn-info ms-2 m-r-1em'>Read</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='customer_update.php?id={$CustomerID}' class='btn btn-primary m-r-1em'>Edit</a>";
+                echo "<a href='customer_update.php?id={$CustomerID}' class='btn btn-primary ms-2 m-r-1em'>Edit</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_user({$CustomerID});'  class='btn btn-danger'>Delete</a>";
+                echo "<a href='#' onclick='delete_user({$CustomerID});'  class='btn btn-danger ms-2 '>Delete</a>";
                 echo "</td>";
                 echo "</tr>";
             }

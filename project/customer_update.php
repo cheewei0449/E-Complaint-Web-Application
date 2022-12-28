@@ -2,6 +2,7 @@
 <html>
 <?php
 include 'check.php';
+ob_start();
 ?>
 
 <head>
@@ -19,6 +20,9 @@ include 'check.php';
 </head>
 
 <body>
+    <?php
+    include "header_navbar.php";
+    ?>
     <!-- container -->
     <div class="container">
         <div class="page-header">
@@ -173,7 +177,7 @@ include 'check.php';
                     // Execute the query
 
                     if ($stmt->execute()) {
-                        header("Location: customer_read.php?message=update_success");
+                        header("Location:customer_read.php?message=update_success");
                         ob_end_flush();
                     } else {
                         if (file_exists($target_file)) {
@@ -256,12 +260,6 @@ include 'check.php';
                             <input class="form-check-input" type="radio" name="gender" value="Female" id="Female" required <?php echo ($gender == 'Female') ?  "checked" : "";  ?>>
                             <label class="form-check-label" for="Female">
                                 Female
-                            </label>
-                        </div>
-                        <div class="form-check mx-3">
-                            <input class="form-check-input" type="radio" name="gender" value="Others" id="Others" required <?php echo ($gender == 'Others') ?  "checked" : "";  ?>>
-                            <label class="form-check-label" for="Others">
-                                Others
                             </label>
                         </div>
                 </tr>

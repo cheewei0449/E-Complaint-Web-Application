@@ -2,6 +2,7 @@
 <html>
 <?php
 include 'check.php';
+ob_start();
 ?>
 
 <head>
@@ -18,6 +19,9 @@ include 'check.php';
 </head>
 
 <body>
+    <?php
+    include "header_navbar.php";
+    ?>
     <!-- container -->
     <div class="container">
         <div class="page-header">

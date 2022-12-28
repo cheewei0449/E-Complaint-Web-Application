@@ -88,6 +88,8 @@ include 'check.php';
                     die('ERROR: ' . $exception->getMessage());
                 }
 
+                $record_save = 0;
+
                 for ($count = 0; $count < count($_POST['ProductID']); $count++) {
                     try {
                         $query_order_detail = "INSERT INTO order_detail SET OrderID=:OrderID, ProductID=:ProductID, quantity=:quantity";
@@ -100,9 +102,12 @@ include 'check.php';
 
                         $record_number = $count + 1;
                         if ($stmt_order_detail->execute()) {
-                            echo "<div class='alert alert-success'>Record $record_number was saved.</div>";
+                            $record_save++;
                         } else {
                             echo "<div class='alert alert-danger'>Unable to save record.</div>";
+                        }
+                        if ($record_save == count($ProductID)) {
+                            echo "<div class='alert alert-success'>The record have be save.</div>";
                         }
                     } catch (PDOException $exception) {
                         die('ERROR: ' . $exception->getMessage());
@@ -249,7 +254,7 @@ include 'check.php';
             }
             var set = new Set(newarray);
             if (set.size !== newarray.length) {
-                alert("There are duplicate items in the array");
+                alert("The item can't repeat!");
             } else {
                 document.getElementById("myForm").submit();
             }

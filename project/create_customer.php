@@ -88,7 +88,6 @@ include 'check.php';
                     $image = "";
                 }
 
-
                 if ($vaildation == true) {
 
                     include 'config/database.php';
@@ -152,11 +151,11 @@ include 'check.php';
                     </tr>
                     <tr>
                         <td>Password</td>
-                        <td><input type='text' name='password' class='form-control' /></td>
+                        <td><input type='password' name='password' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Confirm the Password</td>
-                        <td><input type='text' name='password2' class='form-control' /></td>
+                        <td><input type='password' name='password2' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>First Name</td>
@@ -183,12 +182,6 @@ include 'check.php';
                                 <input class="form-check-input" type="radio" name="gender" value="Female" id="Female" required>
                                 <label class="form-check-label" for="Female">
                                     Female
-                                </label>
-                            </div>
-                            <div class="form-check mx-3">
-                                <input class="form-check-input" type="radio" name="gender" value="Others" id="Others" required>
-                                <label class="form-check-label" for="Others">
-                                    Others
                                 </label>
                             </div>
                     </tr>

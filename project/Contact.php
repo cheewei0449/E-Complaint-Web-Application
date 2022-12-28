@@ -19,15 +19,18 @@ include 'check.php';
 
 <body>
 
+
     <?php
     include "header_navbar.php";
     ?>
+
+
     <main>
 
         <!-- Content -->
         <div class="container contact-form">
             <div class="contact-image">
-                <form method="post">
+                <form method="post" action="send.php">
                     <h3>Contact Us</h3>
                     <div class="row">
                         <div class="col-md-6">
