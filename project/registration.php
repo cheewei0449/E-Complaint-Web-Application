@@ -205,7 +205,7 @@
                         <td></td>
                         <td>
                             <input type='submit' value='Save' class='btn btn-primary' />
-                            <a href='login.php' class='btn btn-danger'>Back to Login</a>
+                            <a href='index.php' class='btn btn-danger'>Back to Login</a>
                         </td>
                     </tr>
                 </table>
