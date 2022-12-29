@@ -7,4 +7,4 @@ session_unset();
 // destroy the session 
 session_destroy();
 
-header("Location: index.php?error=logout");
+header("Location: login.php?error=logout");
