@@ -203,7 +203,7 @@ ob_start();
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Username</td>
-                    <td><input type='text' name='username' value="<?php echo $username;  ?>" class='form-control' /></td>
+                    <td><input type='text' name='username' value="<?php echo $username;  ?>" class='form-control' disabled /></td>
                 </tr>
                 <tr>
                     <td>Old Password</td>
