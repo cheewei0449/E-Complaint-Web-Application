@@ -42,36 +42,39 @@ include 'check.php';
                 $date_of_birth = $_POST['date_of_birth'];
                 $account_status = $_POST['account_status'];
 
+                $target_file = "";
+                $file_upload_error_messages = "";
+
 
                 $vaildation = true;
 
 
                 if ($username == "" || $password == "" ||  $first_name == "" || $last_name == "" || $gender == "" || $date_of_birth == "") {
-                    echo "<div class='alert alert-danger'>Pls don't have empty.</div>";
+                    $file_upload_error_messages .= "<div class='alert alert-danger'>Pls don't have empty.</div>";
                     $vaildation = false;
                 }
 
                 if (strpos($username, " ") !== false) {
-                    echo "<div class='alert alert-danger'>can't space.</div>";
+                    $file_upload_error_messages .= "<div class='alert alert-danger'>can't space.</div>";
                     $vaildation = false;
                 }
                 if (strlen($username) < 6) {
-                    echo "<div class='alert alert-danger'>The username need more then 6 word.</div>";
+                    $file_upload_error_messages .= "<div class='alert alert-danger'>The username need more then 6 word.</div>";
                     $vaildation = false;
                 }
 
                 if (!preg_match("/[0-9]/", $password) || (!preg_match("/[a-z]/", $password)) || (!preg_match("/[A-Z]/", $password)) || strlen($password) < 8) {
-                    echo "<div class='alert alert-danger'>-Need the number !<br>-Need the a-z!<br>-Need the A-Z!<br>-The password need more the 8word!</br></div>";
+                    $file_upload_error_messages .= "<div class='alert alert-danger'>-Need the number !<br>-Need the a-z!<br>-Need the A-Z!<br>-The password need more the 8word!</br></div>";
                     $vaildation = false;
                 } else if ($confirm_password !== $password) {
-                    echo "<div class='alert alert-danger'>The password not same.</div>";
+                    $file_upload_error_messages .= "<div class='alert alert-danger'>The password not same.</div>";
                     $vaildation = false;
                 } else {
                     $password = md5($password);
                 }
 
                 if ($date_of_birth > date('Y-m-d')) {
-                    echo "<div class='alert alert-danger'>Date of Birth can't in the future.</div>";
+                    $file_upload_error_messages .= "<div class='alert alert-danger'>Date of Birth can't in the future.</div>";
                     $vaildation = false;
                 }
                 $date1 = date_create(date('Y-m-d'));
@@ -79,7 +82,7 @@ include 'check.php';
                 $diff = date_diff($date1, $date2);
                 $age = $diff->format("%y");
                 if ($age <= 18) {
-                    echo "<div class='alert alert-danger'>Need 18 Age </div>";
+                    $file_upload_error_messages .= "<div class='alert alert-danger'>Need 18 Age </div>";
                     $vaildation = false;
                 }
 
