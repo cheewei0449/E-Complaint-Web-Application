@@ -7,6 +7,7 @@ include 'check.php';
 
 <head>
     <title>PDO - Create a Record - PHP CRUD Tutorial</title>
+    <link rel="stylesheet" href="css/contact.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
@@ -142,6 +143,7 @@ Top 5 selling Products  -->
 
         <main class="mt-5">
             <div class="container shadow p-3 pb-5 " id="background">
+            <div class="card bg-white p-5" >
                 <div class=" bg-black p-4 mb-5">
                     <div class="monitor center">
                         <p class="m-0 text-light">Welcome for <?php echo $current_user ?></p>
@@ -149,66 +151,66 @@ Top 5 selling Products  -->
                 </div>
                 <div class="row gx-0 gx-md-5 gy-5">
                     <div class="col-12 col-md-4">
-                        <div class="p-3 bg-white  text-center">
-                            <h4 class="fw-semibold text-black ">Total Customers <br> <?php echo "<p class='my-2 fs-3 text-black fw-bolder'>$total_customer</p>" ?></h4>
+                        <div class="p-3 bg-black  text-center">
+                            <h4 class="fw-semibold text-white ">Total Customers <br> <?php echo "<p class='my-2 fs-3 text-white fw-bolder'>$total_customer</p>" ?></h4>
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
-                        <div class="p-3 bg-white   text-center">
-                            <h4 class="fw-semibold text-black text-opacity-50">Total Products <br> <?php echo "<p class='my-2 fs-3 text-black  fw-bolder'>$total_product</p>" ?></h4>
+                        <div class="p-3 bg-black   text-center">
+                            <h4 class="fw-semibold text-white text-opacity-50">Total Products <br> <?php echo "<p class='my-2 fs-3 text-white  fw-bolder'>$total_product</p>" ?></h4>
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
-                        <div class="p-3 bg-white  text-center">
-                            <h4 class="fw-semibold text-black ">Total Orders <br> <?php echo "<p class='my-2 fs-3 text-black fw-bolder'>$total_order</p>" ?></h4>
+                        <div class="p-3 bg-black  text-center">
+                            <h4 class="fw-semibold text-white ">Total Orders <br> <?php echo "<p class='my-2 fs-3 text-white fw-bolder'>$total_order</p>" ?></h4>
                         </div>
                     </div>
                 </div>
                 <div class="row gx-0 gx-md-5 gy-5 mt-3">
-                    <h3 class="fw-semibold text-black">Your Latest Order</h3>
+                    <h3 class="fw-semibold text-black ">Your Latest Order</h3>
                     <div class="col-12 col-md-6">
-                        <div class="p-3 bg-white -top text-center">
-                            <h4 class="fw-semibold text-black ">Latest OrderID<br> <?php echo "<p class='my-2 fs-3 text-black fw-bolder'>$latest_order</p>" ?></h4>
+                        <div class="p-3 bg-black -top text-center">
+                            <h4 class="fw-semibold text-white ">Latest OrderID<br> <?php echo "<p class='my-2 fs-3 text-white fw-bolder'>$latest_order</p>" ?></h4>
                         </div>
-                        <div class="p-3 bg-white border text-center">
-                            <h4 class="fw-semibold text-black ">Name <br>
-                                <p class='my-2 fs-3 text-black fw-bolder'><?php echo isset($first_name) && isset($last_name) ? $first_name . " " . $last_name : "No Record Found" ?></p>
+                        <div class="p-3 bg-black border text-center">
+                            <h4 class="fw-semibold text-white ">Name <br>
+                                <p class='my-2 fs-3 text-white fw-bolder'><?php echo isset($first_name) && isset($last_name) ? $first_name . " " . $last_name : "No Record Found" ?></p>
                             </h4>
                         </div>
-                        <div class="p-3 bg-white rounded-bottom text-center">
-                            <h4 class="fw-semibold text-black ">Purchase Date <br>
-                                <p class='my-2 fs-3 text-black fw-bolder'><?php echo isset($order_date) ? $order_date : "No Record Found" ?></p>
+                        <div class="p-3 bg-black rounded-bottom text-center">
+                            <h4 class="fw-semibold text-white ">Purchase Date <br>
+                                <p class='my-2 fs-3 text-white fw-bolder'><?php echo isset($order_date) ? $order_date : "No Record Found" ?></p>
                             </h4>
                         </div>
                     </div>
                     <div class="col-12 col-md align-self-center">
-                        <div class="p-3 bg-white  text-center">
-                            <h4 class="fw-semibold text-black ">Purchase Amount <br>
-                                <p class='my-2 fs-3 text-black fw-bolder'><?php echo isset($total_price) ? "RM" .   number_format(round($total_price, 1), 2) : "No Record Found" ?></p>
+                        <div class="p-3 bg-black  text-center">
+                            <h4 class="fw-semibold text-white ">Purchase Amount <br>
+                                <p class='my-2 fs-3 text-white fw-bolder'><?php echo isset($total_price) ? "RM" .   number_format(round($total_price, 1), 2) : "No Record Found" ?></p>
                         </div>
                     </div>
                 </div>
                 <div class="row gx-0 gx-md-5 gy-5 mt-3">
                     <h3 class="fw-semibold text-black">Top Purchase Order</h3>
                     <div class="col-12 col-md-6">
-                        <div class="p-3 bg-white -top text-center">
-                            <h4 class="fw-semibold text-black ">OrderID<br> <?php echo "<p class='my-2 fs-3 text-black fw-bolder'>$top_OrderID</p>" ?></h4>
+                        <div class="p-3 bg-black -top text-center">
+                            <h4 class="fw-semibold text-white ">OrderID<br> <?php echo "<p class='my-2 fs-3 text-white fw-bolder'>$top_OrderID</p>" ?></h4>
                         </div>
-                        <div class="p-3 bg-white border text-center">
-                            <h4 class="fw-semibold text-black ">Name <br>
-                                <p class='my-2 fs-3 text-black fw-bolder'><?php echo isset($top_first_name) && isset($top_last_name) ? $top_first_name . " " . $top_last_name : "No Record Found" ?></p>
+                        <div class="p-3 bg-black border text-center">
+                            <h4 class="fw-semibold text-white ">Name <br>
+                                <p class='my-2 fs-3 text-white fw-bolder'><?php echo isset($top_first_name) && isset($top_last_name) ? $top_first_name . " " . $top_last_name : "No Record Found" ?></p>
                             </h4>
                         </div>
-                        <div class="p-3 bg-white rounded-bottom text-center">
-                            <h4 class="fw-semibold text-black ">Purchase Date <br>
-                                <p class='my-2 fs-3 text-black fw-bolder'><?php echo isset($top_order_date) ? $top_order_date : "No Record Found" ?></p>
+                        <div class="p-3 bg-black rounded-bottom text-center">
+                            <h4 class="fw-semibold text-white ">Purchase Date <br>
+                                <p class='my-2 fs-3 text-white fw-bolder'><?php echo isset($top_order_date) ? $top_order_date : "No Record Found" ?></p>
                             </h4>
                         </div>
                     </div>
                     <div class="col-12 col-md align-self-center">
-                        <div class="p-3 bg-white  text-center">
-                            <h4 class="fw-semibold text-black ">Purchase Amount <br>
-                                <p class='my-2 fs-3 text-black fw-bolder'><?php echo isset($highest_price) ? "RM" . number_format(round($highest_price, 1), 2) : "No Record Found" ?></p>
+                        <div class="p-3 bg-black  text-center">
+                            <h4 class="fw-semibold text-white ">Purchase Amount <br>
+                                <p class='my-2 fs-3 text-white fw-bolder'><?php echo isset($highest_price) ? "RM" . number_format(round($highest_price, 1), 2) : "No Record Found" ?></p>
                         </div>
                     </div>
                 </div>

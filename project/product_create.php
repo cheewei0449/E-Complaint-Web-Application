@@ -7,6 +7,7 @@ include 'check.php';
 <head>
     <title>PDO - Create a Record - PHP CRUD Tutorial</title>
     <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" href="css/contact.css" />
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
@@ -147,34 +148,34 @@ include 'check.php';
 
             <!-- html form here where the product information will be entered -->
             <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
-                <table class='table table-hover table-responsive table-bordered'>
+                <table class="table table-dark table-sm">
                     <tr>
                         <td>Name</td>
-                        <td><input type='text' name='name' class='form-control' /></td>
+                        <td class='p-2'><input type='text' name='name' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Description</td>
-                        <td><input type='text' name='description' class='form-control' /></td>
+                        <td class='p-2'><input type='text' name='description' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Price</td>
-                        <td><input type='number' name='price' class='form-control' /></td>
+                        <td class='p-2'><input type='number' name='price' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Promotion_price</td>
-                        <td><input type='number' name='promotion_price' class='form-control' /></td>
+                        <td class='p-2'><input type='number' name='promotion_price' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Photo</td>
-                        <td><input type="file" name="image" /></td>
+                        <td class='p-2'><input type="file" name="image" /></td>
                     </tr>
                     <tr>
                         <td>Manufacture_date</td>
-                        <td><input type='date' name='manufacture_date' class='form-control' /></td>
+                        <td class='p-2'><input type='date' name='manufacture_date' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Expired_date</td>
-                        <td><input type='date' name='expired_date' class='form-control' /></td>
+                        <td class='p-2'><input type='date' name='expired_date' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td></td>

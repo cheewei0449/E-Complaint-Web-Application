@@ -5,6 +5,7 @@ include 'check.php';
 ?>
 
 <head>
+    <link rel="stylesheet" href="css/contact.css" />
     <title>PDO - Create a Record - PHP CRUD Tutorial</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
@@ -157,6 +158,7 @@ include 'check.php';
                         <th>#</th>
                         <th>Products</th>
                         <th>Quantity</th>
+                        <th></th>
                     </tr>
 
                     <?php
@@ -185,6 +187,8 @@ include 'check.php';
                     echo    "</td>";
                     echo    "<td>";
                     echo    "<input type='number' name='quantity[]' value=\"1\" class='form-control' min=\"1\" />";
+                    echo    "</td>";
+                    echo    "<td>";
                     echo    "</td>";
                     echo    "</tr>";
                     ?>

@@ -153,7 +153,7 @@ include 'check.php';
 
         <form id="myForm" action="<?php echo $_SERVER["PHP_SELF"] . "?id={$id}"; ?>" method="POST">
             <div class="table-responsive">
-                <table class='table table-hover table-bordered '>
+                <table class='table table-dark table-bordered '>
                     <thead>
                         <div class="col-8 col-sm-7 m-auto mb-4">
                             <div><b>OrderID</b></div>

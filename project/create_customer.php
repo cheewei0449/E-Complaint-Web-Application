@@ -9,6 +9,7 @@ include 'check.php';
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Homework</title>
     <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" href="css/contact.css" />
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
@@ -144,30 +145,30 @@ include 'check.php';
 
             <!-- html form here where the product information will be entered -->
             <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
-                <table class='table table-hover table-responsive table-bordered'>
-                    <tr>
+            <table class="table table-dark table-sm">
+                    <tr  >
                         <td>Username</td>
-                        <td><input type='text' name='username' value='' class='form-control' /></td>
+                        <td class='p-2'><input type='text' name='username' value='' class='form-control ' /></td>
                     </tr>
                     <tr>
                         <td>Password</td>
-                        <td><input type='password' name='password' class='form-control' /></td>
+                        <td class='p-2'><input type='password' name='password' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Confirm the Password</td>
-                        <td><input type='password' name='password2' class='form-control' /></td>
+                        <td class='p-2'><input type='password' name='password2' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>First Name</td>
-                        <td><input type='text' name='first_name' class='form-control' /></td>
+                        <td class='p-2'><input type='text' name='first_name' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Last Name</td>
-                        <td><input type='text' name='last_name' class='form-control' /></td>
+                        <td class='p-2'><input type='text' name='last_name' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>User image</td>
-                        <td><input type="file" name="image" /></td>
+                        <td class='p-2'><input type="file" name="image" /></td>
                     </tr>
                     <tr>
                         <td>Gender</td>
@@ -187,7 +188,7 @@ include 'check.php';
                     </tr>
                     <tr>
                         <td>date_of_birth</td>
-                        <td><input type='date' name='date_of_birth' class='form-control' /></td>
+                        <td class='p-3'><input type='date' name='date_of_birth' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>Account status</td>
