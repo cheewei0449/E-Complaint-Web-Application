@@ -152,17 +152,17 @@ Top 5 selling Products  -->
                 <div class="row gx-0 gx-md-5 gy-5">
                     <div class="col-12 col-md-4">
                         <div class="p-3 bg-black  text-center">
-                            <h4 class="fw-semibold text-white ">Total Customers <br> <?php echo "<p class='my-2 fs-3 text-white fw-bolder'>$total_customer</p>" ?></h4>
+                            <h4 class="fw-semibold text-white ">Total Customers <br> <?php echo "<a href='customer_read.php'><p class='my-2 fs-3 text-white fw-bolder'>$total_customer</p></a>" ?></h4>
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="p-3 bg-black   text-center">
-                            <h4 class="fw-semibold text-white text-opacity-50">Total Products <br> <?php echo "<p class='my-2 fs-3 text-white  fw-bolder'>$total_product</p>" ?></h4>
+                            <h4 class="fw-semibold text-white text-opacity-50">Total Products <br> <?php echo "<a href='product_read.php'><p class='my-2 fs-3 text-white  fw-bolder'>$total_product</p></a>" ?></h4>
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="p-3 bg-black  text-center">
-                            <h4 class="fw-semibold text-white ">Total Orders <br> <?php echo "<p class='my-2 fs-3 text-white fw-bolder'>$total_order</p>" ?></h4>
+                            <h4 class="fw-semibold text-white ">Total Orders <br> <?php echo "<a href='order_read.php'><p class='my-2 fs-3 text-white fw-bolder'>$total_order</p></a>" ?></h4>
                         </div>
                     </div>
                 </div>

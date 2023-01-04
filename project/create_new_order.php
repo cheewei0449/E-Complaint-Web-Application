@@ -64,7 +64,7 @@ include 'check.php';
                     $stmt_order_summary->bindParam(':CustomerID', $CustomerID);
 
                     if ($stmt_order_summary->execute()) {
-                        echo "<div class='alert alert-success'>Record was saved.</div>";
+
 
                         // prepare select query
                         $query = "SELECT OrderID FROM order_summary ORDER BY OrderID DESC LIMIT 1";
@@ -108,7 +108,7 @@ include 'check.php';
                             echo "<div class='alert alert-danger'>Unable to save record.</div>";
                         }
                         if ($record_save == count($ProductID)) {
-                            echo "<div class='alert alert-success'>The record have be save.</div>";
+                            echo "<div class='alert alert-success'>Record was saved.</div>";
                         }
                     } catch (PDOException $exception) {
                         die('ERROR: ' . $exception->getMessage());

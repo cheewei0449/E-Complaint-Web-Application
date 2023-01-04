@@ -110,12 +110,13 @@
 
                         // Execute the query
                         if ($stmt->execute()) {
-                            echo "<div class='alert alert-success'>Record was saved.</div>";
+                            echo "<div class='alert alert-success'>Registration successful.</div>";
+                            header("Location: index.php?error=Registration_successful&id=$id");
                         } else {
                             if (file_exists($target_file)) {
                                 unlink($target_file);
                             }
-                            echo "<div class='alert alert-danger'>Unable to save record.</div>";
+                            echo "<div class='alert alert-danger'>Unsuccessful registration。</div>";
                         }
                     }
                     // show error

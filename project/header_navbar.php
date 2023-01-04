@@ -30,7 +30,7 @@
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="create_customer.php">Create Customer</a></li>
-              <li><a class="dropdown-item" href="customer_read.php">Customer riew</a></li>
+              <li><a class="dropdown-item" href="customer_read.php">Customer List</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">

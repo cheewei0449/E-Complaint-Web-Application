@@ -23,6 +23,8 @@
       echo "<div class = 'alert alert-success align-item-center'>Logout Successfully</div>";
     } elseif ($error == "session_expired") {
       echo "<div class = 'alert alert-danger align-item-center'>Access Denied</div>";
+    } elseif ($error == "Registration_successful") {
+      echo "<div class = 'alert alert-success align-item-center'>Registration_successful</div>";
     }
   }
   if ($_POST) {
