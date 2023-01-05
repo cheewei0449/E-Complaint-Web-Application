@@ -71,7 +71,6 @@ ob_start();
         if ($_POST) {
 
             if ($_POST) {
-                $username = $_POST['username'];
                 $old_password = ($_POST['old_password']);
                 $new_password = $_POST['new_password'];
                 $confirm_password = $_POST['confirm_password'];
@@ -93,8 +92,8 @@ ob_start();
                 $file_upload_error_messages = "";
 
                 // Check Empty
-                if ($username == "" || $first_name == "" || $last_name == "" || $gender == "" || $date_of_birth == "") {
-                    echo "<div class='alert alert-danger'>Please make sure all fields are not empty</div>";
+                if ($first_name == "" || $last_name == "" || $gender == "" || $date_of_birth == "") {
+                    $file_upload_error_messages .= "<div class='alert alert-danger'>Please make sure all fields are not empty</div>";
                     $validation = false;
                 }
 
@@ -106,31 +105,21 @@ ob_start();
                 } else if ($old_password == "" && $new_password == "" && $confirm_password == "") {
                     $pass = $password;
                 } else if (!preg_match("/[0-9]/", $new_password) || !preg_match("/[a-z]/", $new_password) || !preg_match("/[A-Z]/", $new_password) || strlen($new_password) < 8) {
-                    echo "<div class='alert alert-danger'>Please enter new password with at least <br> - 1 capital letter <br> - 1 small letter <br> - 1 integer <br> - more than 8 character</div>";
+                    $file_upload_error_messages .= "<div class='alert alert-danger'>Please enter new password with at least <br> - 1 capital letter <br> - 1 small letter <br> - 1 integer <br> - more than 8 character</div>";
                     $validation = false;
                 } else if ($confirm_password !== $new_password) {
-                    echo "<div class='alert alert-danger'>Please enter valid confirm password</div>";
+                    $file_upload_error_messages .= "<div class='alert alert-danger'>Please enter valid confirm password</div>";
                     $validation = false;
                 }
 
-                // var_dump($username);
 
-                // Check Username
-                if (strpos($username, " ") !== false) {
-                    // if (preg_match("/[\s]/", $username)) {
-                    echo "<div class='alert alert-danger'>No space is allowed in username</div>";
-                    $validation = false;
-                } else if (strlen($username) < 6) {
-                    echo "<div class='alert alert-danger'>Username should contained at leats 6 characters</div>";
-                    $validation = false;
-                }
 
                 // Check birthday
                 if ($date_of_birth > date('Y-m-d')) {
-                    echo "<div class='alert alert-danger'>Date of Birth cannot in future.</div>";
+                    $file_upload_error_messages .= "<div class='alert alert-danger'>Date of Birth cannot in future.</div>";
                     $validation = false;
                 } else if ($age->format("%y") < 18) {
-                    echo "<div class='alert alert-danger'>Age below 18 years old are not allowed.</div>";
+                    $file_upload_error_messages .= "<div class='alert alert-danger'>Age below 18 years old are not allowed.</div>";
                     $validation = false;
                 }
             }
