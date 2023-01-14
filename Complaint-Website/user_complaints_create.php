@@ -13,6 +13,7 @@ ob_start();
     <title>Create User</title>
 
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/all.css" />
 
 </head>
 

@@ -12,6 +12,7 @@ include 'check_session.php';
     <title>Read Users</title>
 
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/all.css" />
     
 </head>
 
@@ -78,6 +79,7 @@ include 'check_session.php';
                 echo "<th>Email</th>";
                 echo "<th>Role</th>";
                 echo "<th>Register Date</th>";
+                echo "<th></th>";
                 echo "</tr>";
 
                 // retrieve our table contents
@@ -96,13 +98,12 @@ include 'check_session.php';
 
                     echo "<td>";
 
-                    echo "<div class='row'>";
 
                     // we will use this links on next part of this post
-                    echo "<a href='admin_users_update.php?id={$userID}' class='btn btn-primary col-11 col-lg m-auto me-lg-1 mt-2 mt-lg-0'>Edit</a>";
+                    echo "<a href='admin_users_update.php?id={$userID}' class='btn btn-primary ms-2 '>Edit</a>";
 
                     // we will use this links on next part of this post
-                    echo "<a href='#' onclick='delete_customer({$userID});' class='btn btn-danger col-11 col-lg m-auto mt-2 mt-xl-0'>Delete</a>";
+                    echo "<a href='#' onclick='delete_customer({$userID});' class='btn btn-danger ms-2 '>Delete</a>";
                     echo "</div>";
                     echo "</td>";
                     echo "</tr>";
