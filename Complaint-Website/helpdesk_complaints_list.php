@@ -64,7 +64,13 @@ include 'check_session.php';
                     echo "<div class='alert alert-danger align-item-center'>Unknown error happened</div>";
                 }
             }
-            
+
+            $action = isset($_GET['action']) ? $_GET['action'] : "";
+
+            // if it was redirected from delete.php
+            if ($action == 'deleted') {
+                echo "<div class='alert alert-success'>Record was deleted.</div>";
+            }
 
             // include database connection
             include 'config/database.php';
@@ -72,17 +78,17 @@ include 'check_session.php';
             if ($_POST) {
                 foreach ($_POST['complaintID'] as $newcomplaintID) {
                     $status_check = "Pending";
-            
+
                     $query_check = "UPDATE complaint SET status=:status WHERE complaintID=:complaintID";
                     $stmt_check = $con->prepare($query_check);
-    
+
                     $stmt_check->bindParam(':status', $status_check);
                     $stmt_check->bindParam(':complaintID', $newcomplaintID);
-    
+
                     $stmt_check->execute();
-                }    
+                }
             }
-            
+
             ?>
 
             <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
@@ -123,8 +129,11 @@ include 'check_session.php';
                         echo "<td style='width: 35%'>";
                         // read one record
                         echo "<div class='d-flex align-items-center'>";
-                        echo "<a href='helpdesk_complaints_read.php?id={$complaintID}' class='btn btn-info col m-auto me-lg-1'>Read</a>";
+                        echo "<a href='helpdesk_complaints_read.php?id={$complaintID}' class='btn btn-info col ms-2'>Read</a>";
                         // we will use this links on next part of this post
+                        echo "<a href='#' onclick='delete_complaint({$complaintID});' class='btn btn-danger ms-2 '>Delete</a>";
+
+
 
                         $query_check = "SELECT file_name FROM complaint INNER JOIN files ON complaint.complaintID=files.complaintID WHERE files.complaintID = ?";
                         $stmt_check  = $con->prepare($query_check);
@@ -139,15 +148,15 @@ include 'check_session.php';
                         $num_check = $stmt_check->rowCount();
 
                         if ($num_check > 0) {
-                            echo "<a class='col-3 m-auto ms-3' href='download.php?id={$complaintID}' role='butto'><i class='fa-solid fa-file-arrow-down fa-xl'></i></a>";
+                            echo "<a class='col-1 m-auto ms-1' href='download.php?id={$complaintID}' role='butto'><i class='fa-solid fa-file-arrow-down fa-xl'></i></a>";
                         } else {
-                            echo "<i class='fa-solid fa-file-arrow-down fa-xl ms-3 text-muted col-3'></i>";
+                            echo "<i class='fa-solid fa-file-arrow-down fa-xl ms-1 text-muted col-1'></i>";
                         }
 
                         if ($status == "New") {
-                            echo "<input class='form-check-input col-2 ms-3' type='checkbox' value='$complaintID' name='complaintID[]'>";
+                            echo "<input class='form-check-input col-1 ms-1' type='checkbox' value='$complaintID' name='complaintID[]'>";
                         } else {
-                            echo "<input class='form-check-input col-2 ms-3' type='checkbox' value='' id='flexCheckChecked' checked disabled>";
+                            echo "<input class='form-check-input col-1 ms-1' type='checkbox' value='' id='flexCheckChecked' checked disabled>";
                         }
                         echo "</div>";
                         echo "</td>";
@@ -166,7 +175,18 @@ include 'check_session.php';
                 ?>
 
         </div> <!-- end .container -->
-        <!-- Content End -->
+
+        <script type='text/javascript'>
+            // confirm record deletion
+            function delete_complaint(id) {
+
+                if (confirm('Are you sure?')) {
+                    // if user clicked ok,
+                    // pass the id to delete.php and execute the delete query
+                    window.location = 'helpdesk_delete.php?id=' + id;
+                }
+            }
+        </script>
 
         <hr class="featurette-divider">
 
