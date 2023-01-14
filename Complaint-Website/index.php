@@ -39,6 +39,8 @@ session_start();
             echo "<div class='alert alert-success align-item-center'>Logout Successfully</div>";
         } elseif ($error == "session_expired") {
             echo "<div class='alert alert-danger align-item-center'>Access Denied (Session Expired)</div>";
+        } elseif ($error == "Registration_successful") {
+            echo "<div class = 'alert alert-success align-item-center'>Registration_successful</div>";
         } elseif ($error != "") {
             echo "<div class='alert alert-danger align-item-center'>Unknown error happened</div>";
         }
@@ -132,7 +134,7 @@ session_start();
 
     <main class="form-signin w-100 m-auto px-3 py-5 rounded">
         <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
-            <i class="fa-solid fa-circle-exclamation fa-xl fs-1 mb-4" width="72" height="57"></i>
+            <i class="fas fa-comments fa-xl fs-1 mb-4" width="72" height="57"></i>
             <h1 class="h3 mb-3 fw-normal fw-bold">Please sign in</h1>
 
             <div class="form-floating">
@@ -144,10 +146,11 @@ session_start();
                 <label for="password">Password</label>
             </div>
             <input type='submit' value='Save' class='w-100 btn btn-lg btn-primary' />
+            <p class="link"><a href="registration.php">New Registration</a></p>
             <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
         </form>
     </main>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </body>
 
 </html>

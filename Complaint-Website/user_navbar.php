@@ -27,8 +27,8 @@ include 'config/database.php';
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-xl d-flex justify-content-between ">
-            <a class="navbar-brand " href="#">
-                <i class="fa-solid fa-circle-exclamation fa-xl text-light me-2 "></i>
+            <a class="navbar-brand " href="user_dashboard.php">
+                <i class="fas fa-comments fa-xl text-light me-2 "></i>
                 E-Complaint
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
