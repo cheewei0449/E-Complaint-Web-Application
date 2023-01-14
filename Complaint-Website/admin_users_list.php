@@ -29,7 +29,7 @@ include 'check_session.php';
         <!-- container -->
         <div class="container">
             <div class="page-header">
-                <h1>Read Customers</h1>
+                <h1>User List</h1>
             </div>
 
             <!-- PHP code to read records will be here -->
@@ -43,6 +43,8 @@ include 'check_session.php';
                     echo "<div class='alert alert-success'>Record with <b class='fs-2'> userID : $id </b> updated.</div>";
                 } else if ($message == "update_success") {
                     echo "<div class='alert alert-success'>Record was updated.</div>";
+                }  else if ($message == "no_file_found") {
+                    echo "<div class='alert alert-danger'>No file uploaded for this complaints</div>"; 
                 } else if ($message == "create_success") {
                     echo "<div class='alert alert-success'>User was created.</div>"; 
                 } else if ($message == "deleted") { // if it was redirected from delete.php
@@ -58,7 +60,7 @@ include 'check_session.php';
             // delete message prompt will be here
 
             // select all data
-            $query = "SELECT userID, username, email, role, register_date FROM users ORDER BY userID ASC";
+            $query = "SELECT userID, username, email,image, role, register_date FROM users ORDER BY userID ASC";
             $stmt = $con->prepare($query);
             $stmt->execute();
 
@@ -76,6 +78,7 @@ include 'check_session.php';
                 echo "<tr>";
                 echo "<th>userID</th>";
                 echo "<th>Username</th>";
+                echo "<th>Image</th>";
                 echo "<th>Email</th>";
                 echo "<th>Role</th>";
                 echo "<th>Register Date</th>";
@@ -92,6 +95,11 @@ include 'check_session.php';
                     echo "<td>{$userID}</td>";
                     // echo "<td>{$password}</td>";
                     echo "<td>{$username}</td>";
+                    if ($image !== "") {
+                        echo "<td><div class='text-center'><img src='uploads/$image' width='50px'/></div></td>";
+                    } else {
+                        echo "<td class='text-center'><img src='image/user.png'  width='50px'></td>";
+                    }
                     echo "<td>{$email}</td>";
                     echo "<td>{$role}</td>";
                     echo "<td>{$register_date}</td>";

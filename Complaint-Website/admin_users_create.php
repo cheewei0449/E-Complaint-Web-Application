@@ -34,6 +34,7 @@ ob_start();
             <!-- html form to create product will be here -->
             <?php
             $file_upload_error_messages = "";
+            $target_file = "";
 
             if ($_POST) {
                 $userID = trim($_POST['userID']);
@@ -50,6 +51,11 @@ ob_start();
                 if ($userID == "" || $password == "" || $username == "" || $email == "" || $role == "") {
                     $file_upload_error_messages .= "<div class='alert alert-danger'>Please make sure all fields are not empty</div>";
                     $validation = false;
+                }
+                if (!empty($_FILES["image"]["name"])) {
+                    include "image_uploaded.php";
+                } else {
+                    $image = "";
                 }
 
                 // include database connection
@@ -78,7 +84,7 @@ ob_start();
 
                     try {
                         // insert query
-                        $query = "INSERT INTO users SET userID=:userID, password=:password, username=:username, gender=:gender, email=:email, role=:role ,register_date=:register_date";
+                        $query = "INSERT INTO users SET userID=:userID, password=:password, username=:username,image=:image, gender=:gender, email=:email, role=:role ,register_date=:register_date";
                         // prepare query for execution
                         $stmt = $con->prepare($query);
 
@@ -91,6 +97,7 @@ ob_start();
                         $stmt->bindParam(':role', $role);
                         $register_date = date('Y-m-d H:i:s'); // get the current date and time
                         $stmt->bindParam(':register_date', $register_date);
+                        $stmt->bindParam(':image', $image);
 
                         // Execute the query
                         if ($stmt->execute()) {
@@ -146,6 +153,12 @@ ob_start();
                         <p class="fw-bold">Username</p>
                         <div class="input-group input-group-lg">
                             <input type='text' name='username' class='form-control' />
+                        </div>
+                    </div>
+                    <div class="ms-md-1 mb-3 col">
+                        <p class="fw-bold">User image</p>
+                        <div class="input-group input-group-lg">
+                            <input type="file" name="image" />
                         </div>
                     </div>
                     <div class="mb-3 col">

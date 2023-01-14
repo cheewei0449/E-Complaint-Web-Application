@@ -41,7 +41,7 @@ ob_start();
                 // read current record's data
                 try {
                     // prepare select query
-                    $query = "SELECT userID, username, password, email, gender, role FROM users WHERE userID = ? LIMIT 0,1";
+                    $query = "SELECT userID, username, password,image as old_image, email, gender, role FROM users WHERE userID = ? LIMIT 0,1";
                     $stmt = $con->prepare($query);
 
                     // this is the first question mark
@@ -52,11 +52,14 @@ ob_start();
 
                     // store retrieved row to a variable
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    extract($row);
                 }
 
                 // show error
                 catch (PDOException $exception) {
                     die('ERROR: ' . $exception->getMessage());
+                    
                 }
                 ?>
 
@@ -70,6 +73,7 @@ ob_start();
                     $username = $_POST['username'];
                     $gender = $_POST['gender'];
                     $role = $_POST['role'];
+                    $delete_image = $_POST['delete_image'];
 
                     $validation = true;
 
@@ -89,12 +93,28 @@ ob_start();
                         $pass = $row['password'];
                     }
 
+                    if ((!empty($_FILES["image"]["name"]) && $delete_image == "Yes")) {
+                        $file_upload_error_messages .= "<div class='alert alert-danger'>Cannot upload image if want to delete image.</div>";
+                        $validation = false;
+                    } else if ($delete_image == "Yes") {
+                        unlink("uploads/$old_image");
+                        $new_image = "";
+                    } else if (empty($_FILES["image"]["name"])) {
+                        $new_image = $old_image;
+                    } else {
+                        include "image_uploaded.php";
+                        if ($validation == true && $old_image != "" && getimagesize($target_file) !== false) {
+                            unlink("uploads/$old_image");
+                        }
+                        $new_image = $image;
+                    }
+
                     if ($validation) {
                         try {
                             // write update query
                             // in this case, it seemed like we have so many fields to pass and
                             // it is better to label them and not use question marks
-                            $query = "UPDATE users SET password=:password, username=:username, email=:email, gender=:gender, role=:role WHERE userID=:userID";
+                            $query = "UPDATE users SET password=:password, username=:username,image=:image,  email=:email, gender=:gender, role=:role WHERE userID=:userID";
                             // prepare query for execution
                             $stmt = $con->prepare($query);
 
@@ -106,6 +126,7 @@ ob_start();
                                 $stmt->bindParam(':password', md5($new_password));
                             }
                             $stmt->bindParam(':username', $username);
+                            $stmt->bindParam(':image', $new_image);
                             $stmt->bindParam(':email', $email);
                             $stmt->bindParam(':gender', $gender);
                             $stmt->bindParam(':role', $role);
@@ -116,6 +137,9 @@ ob_start();
                                 header("Location: admin_users_list.php?message=update_success&id=$id");
                                 ob_end_flush();
                             } else {
+                                if (file_exists($target_file)) {
+                                    unlink($target_file);
+                                }
                                 echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
                             }
                         }
@@ -146,6 +170,28 @@ ob_start();
                         <tr>
                             <td>Username</td>
                             <td><input type='text' name='username' value="<?php echo $row['username']; ?>" class='form-control' /></td>
+                        </tr>
+                        <input type='hidden' name='delete_image' value='No'>
+                        <?php if ($old_image != "") {
+                            echo "<tr>";
+                            echo "<td colspan='2' class='text-center'><img src='uploads/$old_image'alt='Image not found' width='250px'>";
+                            echo "<div class='form-check form-switch mt-2 d-flex justify-content-center'>";
+                            echo "<input class='form-check-input me-3' type='checkbox' role='switch' name='delete_image' value='Yes' id='delete_image'>";
+                            echo "<label class='form-check-label fw-bold' for='delete_image'>";
+                            echo  "Delete Image";
+                            echo "</td>";
+                            echo "</label>";
+                            echo "</div>";
+                            echo "</tr>";
+                        } else {
+                            echo "<tr>";
+                            echo "<td colspan='2' class='text-center'><img src='image/user.png'alt='Image not found' width='250px'></td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                        <tr>
+                            <td>User Image</td>
+                            <td><input type="file" name="image" /></td>
                         </tr>
                         <tr>
                             <td>Email</td>

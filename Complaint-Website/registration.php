@@ -51,6 +51,7 @@
 
             <!-- html form to create product will be here -->
             <?php
+            $target_file = "";
             $file_upload_error_messages = "";
 
             if ($_POST) {
@@ -100,13 +101,19 @@
                     $password = md5($password);
                 }
 
+                if (!empty($_FILES["image"]["name"])) {
+                    include "image_uploaded.php";
+                } else {
+                    $image = "";
+                }
+
                 if ($validation == true) {
                     // include database connection
                     include 'config/database.php';
 
                     try {
                         // insert query
-                        $query = "INSERT INTO users SET userID=:userID, password=:password, username=:username, gender=:gender, email=:email, role=:role ,register_date=:register_date";
+                        $query = "INSERT INTO users SET userID=:userID, password=:password, username=:username,image=:image, gender=:gender, email=:email, role=:role ,register_date=:register_date";
                         // prepare query for execution
                         $stmt = $con->prepare($query);
 
@@ -117,6 +124,7 @@
                         $stmt->bindParam(':email', $email);
                         $stmt->bindParam(':gender', $gender);
                         $stmt->bindParam(':role', $role);
+                        $stmt->bindParam(':image', $image);
                         $register_date = date('Y-m-d H:i:s'); // get the current date and time
                         $stmt->bindParam(':register_date', $register_date);
 
@@ -178,10 +186,16 @@
                         </div>
                     </div>
                     <div class="ms-md-1 mb-3 col">
+                        <p class="fw-bold">User image</p>
+                        <div class="input-group input-group-lg">
+                            <input type="file" name="image" />
+                        </div>
+                    </div>
+                    <div class="ms-md-1 mb-3 col">
                         <p class="fw-bold">Role</p>
                         <input type="hidden" class="btn-check" name="role" value="" />
                         <div class="input-group input-group-lg">
-                            <input type="radio" class="btn-check" name="role" id="User" value="User"  <?php echo ((isset($role)) && ($role == 'User')) ?  "checked" : ""; ?>>
+                            <input type="radio" class="btn-check" name="role" id="User" value="User" <?php echo ((isset($role)) && ($role == 'User')) ?  "checked" : ""; ?>>
                             <label class="btn btn-lg btn-outline-primary col-6" for="User">User</label>
                         </div>
                     </div>
